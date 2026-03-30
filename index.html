@@ -472,7 +472,7 @@ tr:hover td{background:var(--surface2)}
   <div class="app-header">
     <div>
       <div class="app-header-title">🏠 Gastos Hogar</div>
-      <div class="gh-status" id="gh-status"><div class="gh-dot connected" id="gh-dot"></div><span id="gh-label">✅ Guardado 22:11</span></div>
+      <div class="gh-status" id="gh-status"><div class="gh-dot connected" id="gh-dot"></div><span id="gh-label">bmla72-collab/Gastos/</span></div>
     </div>
     <div class="header-actions">
       <div class="icon-btn" onclick="toggleTheme()">☀️</div>
@@ -483,17 +483,17 @@ tr:hover td{background:var(--surface2)}
 
   <!-- Tab bar -->
   <div class="tab-bar">
-    <button class="tab-btn" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
+    <button class="tab-btn active" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
     <button class="tab-btn" onclick="switchTab(1)" id="tab1"><span>📋</span>Gastos</button>
     <button class="tab-btn" onclick="switchTab(2)" id="tab2"><span>📊</span>Análisis</button>
-    <button class="tab-btn active" onclick="switchTab(3)" id="tab3"><span>📅</span>Cierres</button>
+    <button class="tab-btn" onclick="switchTab(3)" id="tab3"><span>📅</span>Cierres</button>
     <button class="tab-btn" onclick="switchTab(4)" id="tab4"><span>📝</span>Historial</button>
   </div>
 
   <div class="tab-content">
 
     <!-- ══ TAB 0: INICIO / NUEVO GASTO ══ -->
-    <div class="tab-pane" id="pane0">
+    <div class="tab-pane active" id="pane0">
       <div id="today-summary"></div>
       <div id="active-period-banner"><div class="period-indicator">📅 Cierre activo: <strong>Marzo 30</strong> · desde 30/03/2026</div></div>
 
@@ -525,7 +525,7 @@ tr:hover td{background:var(--surface2)}
         <div class="cat-grid" id="cat-grid"><div class="cat-chip" id="chip-restaurante" onclick="selectCat('restaurante')">
       <span class="cat-chip-icon">🍽️</span>
       <span class="cat-chip-label">Restaurante / Ocio</span>
-    </div><div class="cat-chip" id="chip-alimentacion" onclick="selectCat('alimentacion')">
+    </div><div class="cat-chip selected" id="chip-alimentacion" onclick="selectCat('alimentacion')">
       <span class="cat-chip-icon">🛒</span>
       <span class="cat-chip-label">Alimentación</span>
     </div><div class="cat-chip" id="chip-servicios" onclick="selectCat('servicios')">
@@ -727,7 +727,7 @@ tr:hover td{background:var(--surface2)}
     </div>
 
     <!-- ══ TAB 3: CIERRES ══ -->
-    <div class="tab-pane active" id="pane3">
+    <div class="tab-pane" id="pane3">
       <div style="display:flex;gap:8px;margin-bottom:14px">
         <button class="btn-primary" onclick="openNewPeriod()" style="flex:1"><span>➕</span> Nuevo cierre</button>
       </div>
@@ -793,7 +793,7 @@ tr:hover td{background:var(--surface2)}
       <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar" __gchrome_uniqueid="25">
       <button class="btn-primary" onclick="changePassword()" style="margin-top:8px">🔑 Cambiar</button>
     </div>
-    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">0 gastos · 1 cierres</div></div></div>
+    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">1 gastos · 1 cierres</div></div></div>
     <div style="margin-top:10px;margin-bottom:4px">
       <button class="btn-danger" onclick="openDeleteModal()" style="width:100%">🗑 Gestionar borrado de datos…</button>
     </div>
@@ -977,7 +977,7 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
-<div class="toast success show" id="toast">🔒 Cierre cerrado</div>
+<div class="toast success" id="toast">🗑 Cierre eliminado</div>
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
@@ -1396,7 +1396,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = '7qbDrJzwny5cJEzrQQsNQTp0H5gNhmLREpc0q6cLx4oGYmEPYF+rZxr8kkS4vjkqxCGYpvm5pr1YyiSFMpI7+BH9Q7jF8iAlSsW5L4aMXYiNvErfL3j+vEjyoWChGiVt9QW5s5XCg0Pte4ncOiGWceoHULxI05yOqW1zuNRLYQx26o5owxSp6tWl3zJXHauzLAfieQpvlrITMRXpB7/sZP8zoZ1Gs1qD+xsc1vnX0z9oA/aoPjU2P2X2AtDnv+/G6ih2iWTJAHi/DEZVXhnnx+M/D9AEoqaRLW5k6Eb3tQa8mPa1wIoFY/n9uAuK9gHHkdjZWsuC34Cz/zQx/nRoFP9aQp6Vc41XGIGhvhVojbveslpcvs44EahnBl76zLiDHxWYMSprcd9ue9ngRtCysJNPjhq1lheXDV+Z8l+IiyJKFBA63j+TtmfjYWtFdkksK2610ycTrvFJ8RYxOhFt5QTGPOtjAv2JV9oyEwSQDWW8i9xJRgIa1Wzj7wE1N2TWdKozg+E3lWkSI1AGSESyysJJe5S31VgaA14t7OwbacyKSyvhKeeH6Qr/fF3KgdVrVmJNpR4p0UF05SSRtafTOnk7eNW6oaiZdve6EVLpqxoESi3QQOw64tvJpEBwnlZ+qRsVjxiazaDdLdN+7HYYIyKAAugQKtdars4VktqYIRiPk+TXDlCyEo+5T15wGAZZq7WF+3o=';
+const EMBEDDED = 'qjsbvHUs/gHn5bvYUUFdGsKcA72JSqix08njtGFULO5FoHF7JpzdjvgkHjWoSqNMSqMP1EeUwtOcXeRNxfcZ2K+0FU/VB4FtIVKN/krFKA+OP2T/b6uJw7RNkhLkpiR2UrCXDW4jQRhiNNaLn9UUD2JfQX22BjMEr3oPsy+yjbeFebPHD+OEjVfk6z7GNiupHMpGnmz/mAk7z4uN8/Iz/R3E08wUUegXvuDZIgQQ6xSuf09OZ24IjAOI3T/r3QNmC9EZAkI6/NAL/AFVz7uF4rAYygdoVyQ6CswwZTLtX/AfFwTDsGghgjFIkVWzeqK54m7WgfevdeSqw5rqG5x+SExmhwjtrq25lkRNTlMZqnfkPsXXFjl8rmIRVX2t8/JITt+XXuNZTDH9YTLlbEI33ZXF835u+ghEZg3tCM5dLWgDwR+Uh4BuEZIxq1ehaE3KssxM04YJXnDpvupXp6wUBAPV58bf6sSRb4oA087HCiLVsBlvkyUmZUiEyzOQ4LR78zI4k3XC5VY/t6Zli09b2BRcg9fHBNMhvSIvBvSOroYf3GePcrxAoDCUkv99ZIuJ5EKhIhuYmkJFPTjOAjudHXj1jOewPFhE1SD7PkHUMYz0a86EvFdS/hJe96vy1nBMcxQ4F2il+f7L0ufS1+mwk20g1mIZNzlnCvtGqT7z2KcT76Uimrw08Q1PTIclOfFxL+z7FVLwZFnkly9KRYEkfPdIv9gdGAcIaDamYG63Tv/8ZySqrQooSwwDfGTBaIv3YTpIVoroRztpR+QuPueEBzjqvp2jC7oiuYx5QKsmQGnDNrLNphWfQoTfaSv4ChazzqDvWnF5n0Wr6v09yAOuYTQDxBCNbyZRVodIv6YhdJwaSoSK6CUL11RaE6MuiTptD1uj01BTqJzPSJO1eFpObIR5d6th2Bj78V6u+8LhPDGdYMLhuvnARvR3m98ErIYrpZZa6bxlzKqmMtzZ3RTB5WO/AQNepEZP3pCFLohTlt6M9b8/BxZznIDKYkxhkRnAkip3hX6g2R0+1NbEE1y596NTzutVPivBpFhdtwZ1LtcfMWbx';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
