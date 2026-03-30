@@ -472,7 +472,7 @@ tr:hover td{background:var(--surface2)}
   <div class="app-header">
     <div>
       <div class="app-header-title">🏠 Gastos Hogar</div>
-      <div class="gh-status" id="gh-status"><div class="gh-dot connected" id="gh-dot"></div><span id="gh-label">bmla72-collab/Gastos/</span></div>
+      <div class="gh-status" id="gh-status"><div class="gh-dot connected" id="gh-dot"></div><span id="gh-label">✅ Guardado 22:11</span></div>
     </div>
     <div class="header-actions">
       <div class="icon-btn" onclick="toggleTheme()">☀️</div>
@@ -495,7 +495,7 @@ tr:hover td{background:var(--surface2)}
     <!-- ══ TAB 0: INICIO / NUEVO GASTO ══ -->
     <div class="tab-pane" id="pane0">
       <div id="today-summary"></div>
-      <div id="active-period-banner"><div class="period-indicator" style="color:var(--text2);border-color:var(--border)">⚠️ Sin cierre abierto — gastos sin asignar</div></div>
+      <div id="active-period-banner"><div class="period-indicator">📅 Cierre activo: <strong>Marzo 30</strong> · desde 30/03/2026</div></div>
 
       <div class="form-section">
         <label class="form-label">Importe *</label>
@@ -556,7 +556,7 @@ tr:hover td{background:var(--surface2)}
         </div>
         <div>
           <label class="form-label">Cierre</label>
-          <select class="form-select" id="f-period" __gchrome_uniqueid="8"><option value="">Sin cierre</option></select>
+          <select class="form-select" id="f-period" __gchrome_uniqueid="8"><option value="">Sin cierre</option><option value="1774901475303">Marzo 30 🔓</option><option value="1774901477349">Marzo 30 🔓</option></select>
         </div>
       </div>
 
@@ -613,7 +613,7 @@ tr:hover td{background:var(--surface2)}
               <select class="filter-select" id="fl-cat" onchange="applyListFilters()" __gchrome_uniqueid="11"><option value="">Todas</option><option value="restaurante">🍽️ Restaurante / Ocio</option><option value="alimentacion">🛒 Alimentación</option><option value="servicios">💡 Servicios</option><option value="transporte">🚗 Transporte</option><option value="viajes">✈️ Viajes</option><option value="hogar">🏠 Hogar / Hipoteca</option><option value="suscripciones">📱 Suscripciones</option><option value="otros">📦 Otros</option></select>
             </div>
             <div class="filter-group"><label class="filter-label">Cierre</label>
-              <select class="filter-select" id="fl-period" onchange="applyListFilters()" __gchrome_uniqueid="12"><option value="">Todos</option></select>
+              <select class="filter-select" id="fl-period" onchange="applyListFilters()" __gchrome_uniqueid="12"><option value="">Todos</option><option value="1774901475303">Marzo 30 🔓</option><option value="1774901477349">Marzo 30 🔓</option></select>
             </div>
           </div>
           <div class="filter-row" style="margin-top:8px">
@@ -667,7 +667,7 @@ tr:hover td{background:var(--surface2)}
           <div class="filter-group"><label class="filter-label">Desde</label><input type="date" class="filter-input" id="an-from" onchange="renderAnalysis()" __gchrome_uniqueid="38"></div>
           <div class="filter-group"><label class="filter-label">Hasta</label><input type="date" class="filter-input" id="an-to" onchange="renderAnalysis()"></div>
           <div class="filter-group"><label class="filter-label">Cierre</label>
-            <select class="filter-select" id="an-period" onchange="renderAnalysis()" __gchrome_uniqueid="18"><option value="">Todos</option></select>
+            <select class="filter-select" id="an-period" onchange="renderAnalysis()" __gchrome_uniqueid="18"><option value="">Todos</option><option value="1774901475303">Marzo 30 🔓</option><option value="1774901477349">Marzo 30 🔓</option></select>
           </div>
         </div>
       </div>
@@ -732,7 +732,45 @@ tr:hover td{background:var(--surface2)}
         <button class="btn-primary" onclick="openNewPeriod()" style="flex:1"><span>➕</span> Nuevo cierre</button>
       </div>
 
-      <div id="periods-list"><div class="empty-state"><div class="empty-icon">📅</div><div class="empty-text">Crea tu primer cierre</div></div></div>
+      <div id="periods-list"><div class="period-card period-active">
+      <span class="period-badge open">🔓 Abierto</span>
+      <div class="period-title">Marzo 30</div>
+      <div class="period-dates">Desde 30/03/2026 (en curso)</div>
+      <div class="period-totals">
+        <div class="period-total-item"><div class="period-total-label">Total</div><div class="period-total-val">0,00 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Blas</div><div class="period-total-val" style="color:var(--accent)">0,00 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Corinna</div><div class="period-total-val" style="color:#ec4899">0,00 €</div></div>
+      </div>
+      <div style="margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:10px;font-size:12px;font-weight:600;color:var(--text2)">
+        💰 ✅ A mano
+      </div>
+      <div class="period-actions">
+        <button class="btn-secondary" onclick="openEditPeriod('1774901475303')">✏️ Editar</button>
+        <button class="btn-warn" onclick="closePeriod('1774901475303')">🔒 Cerrar</button>
+        <button class="btn-primary" onclick="openPeriodSummary('1774901475303')" style="flex:1;min-height:36px;font-size:13px">📊 Resumen</button>
+        <button class="btn-secondary" onclick="filterByPeriod('1774901475303')">🔍 Gastos</button>
+        <button class="btn-danger" onclick="deletePeriod('1774901475303')">🗑</button>
+      </div>
+    </div><div class="period-card period-active">
+      <span class="period-badge open">🔓 Abierto</span>
+      <div class="period-title">Marzo 30</div>
+      <div class="period-dates">Desde 30/03/2026 (en curso)</div>
+      <div class="period-totals">
+        <div class="period-total-item"><div class="period-total-label">Total</div><div class="period-total-val">0,00 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Blas</div><div class="period-total-val" style="color:var(--accent)">0,00 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Corinna</div><div class="period-total-val" style="color:#ec4899">0,00 €</div></div>
+      </div>
+      <div style="margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:10px;font-size:12px;font-weight:600;color:var(--text2)">
+        💰 ✅ A mano
+      </div>
+      <div class="period-actions">
+        <button class="btn-secondary" onclick="openEditPeriod('1774901477349')">✏️ Editar</button>
+        <button class="btn-warn" onclick="closePeriod('1774901477349')">🔒 Cerrar</button>
+        <button class="btn-primary" onclick="openPeriodSummary('1774901477349')" style="flex:1;min-height:36px;font-size:13px">📊 Resumen</button>
+        <button class="btn-secondary" onclick="filterByPeriod('1774901477349')">🔍 Gastos</button>
+        <button class="btn-danger" onclick="deletePeriod('1774901477349')">🗑</button>
+      </div>
+    </div></div>
     </div>
 
     <!-- ══ TAB 4: HISTORIAL / AUDIT LOG ══ -->
@@ -774,7 +812,7 @@ tr:hover td{background:var(--surface2)}
       <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar" __gchrome_uniqueid="25">
       <button class="btn-primary" onclick="changePassword()" style="margin-top:8px">🔑 Cambiar</button>
     </div>
-    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">0 gastos · 1 cierres</div></div></div>
+    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">0 gastos · 2 cierres</div></div></div>
     <div style="margin-top:10px;margin-bottom:4px">
       <button class="btn-danger" onclick="openDeleteModal()" style="width:100%">🗑 Gestionar borrado de datos…</button>
     </div>
@@ -896,7 +934,7 @@ tr:hover td{background:var(--surface2)}
 </div>
 
 <!-- MODAL: Period -->
-<div class="modal-overlay open" id="modal-period">
+<div class="modal-overlay" id="modal-period">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title" id="modal-period-title">Nuevo cierre</div>
@@ -930,7 +968,7 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="inline-edit"><label>Fecha</label><input type="date" class="form-input" id="e-date"></div>
     <div class="inline-edit"><label>Concepto</label><input type="text" class="form-input" id="e-concept" __gchrome_uniqueid="34"></div>
-    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period" __gchrome_uniqueid="35"><option value="">Sin cierre</option></select></div>
+    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period" __gchrome_uniqueid="35"><option value="">Sin cierre</option><option value="1774901475303">Marzo 30 🔓</option><option value="1774901477349">Marzo 30 🔓</option></select></div>
     <div class="inline-edit"><label>Observaciones</label><textarea class="form-textarea" id="e-obs" __gchrome_uniqueid="36"></textarea></div>
     <div class="inline-edit">
       <label>¿Quién paga?</label>
@@ -958,7 +996,7 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
-<div class="toast success" id="toast">💣 Todos los datos borrados</div>
+<div class="toast success show" id="toast">✅ Cierre guardado</div>
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
@@ -1377,7 +1415,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = 'JVTnZUsPfpXNSdP2cXfiUyyKQhjFuedg49ET6fhHP30gsNveY+Gx3CJ1hRUsEjwTGA9Bbc3oMrzA+V31M24Jr+gbWlwmKRsnRsHGoyTJwHCsAvRDRapPb+bi2ngg9oAb6mFnWIGyL4NOJb/RebOhJVrYv6auwe1uIe4+nPZ/hiaWd5b2xkt38dHZWa6KZIeN2Xnl4iABpA0f1hGQXt2OT2AeIp2OqP7Wb7oNIqeq42wRXPadMpCtxILeJr6/wfmZShXw2mdTxfJGtSBO+qgRW2gB2RGjD07+B4Ll2xkaPZYUTEm5uYTGY6qrsw1yPWq9Gn/aEYu0fRpU3OknaEPgP5gX6pzXGRPO7HCCtOhyqRa/JsXrj+8ReqvCoSPOCR27+TTErcERHG2hxRo33MEQhoz36/y1JH+kBGQpD9MD/Hg+7FOPTtJmqhwcZEaAaqJjtYoEL8ykwHILfZwDvwe+Jtu1ryMJP4SxSdkNYVNv/GmeQAGXXPCuhL5jK76Rpha0lSjEkBRPtCVvGnOPkLX+mOmnyPzFx1P0IFv7ajQpC1wAnlfnEOtWPYavFVcWUCUEWw+gFCQnpwp49QJPLrSm3UF6HUb1B+bWTnkuqs9NCZSgHFnKf2nM45vhUc2Z5om+7gM5RQ3eA1n0IygrrsN/oOu9XdmBz41/cVK+4Wfcsow3WfQDBJBIbZCdyi9zDN7E7EjYPPo=';
+const EMBEDDED = 'kGarSq1oZh+qq5SmWKiLBrkXnxZpK4obmCcelQWolyFH4Mj0dSHHHJFNCeXy7XJkC/t5a7HYUYgcvJ6cma8a5QEutYDEWwfr3B+k1rVwFSNGUAwka/YXj2AaLuRTj4o8P4D0qMI4sWvabov9RiZb4P/ayDAOSr13Chv18pxhFDOtDD7vg4Yzr9eeHJ1XoIYCtUUpbiP2p1BTwe5jyNz/KzCyAHPzKU8HqKjzDhxakPKDeQgmBf63BcjC0RRdfaHhzIM75rSpCCG3UEMMoRzjGhog1Vkqs8+rGHibhWAs9pzTVT51pYKvqL5sMV5LXEqvUlHzeRBt/dMTB4nhmUjIDMIRw+MHxFBSljn0XcMQQYtbIHbHzsQAneCUzlLdKYRtDjXtMdX/utLbcJDhc6kwf0sESqNdI2Y+IDzwA8Mz1UgoGmRLAHDFglL0T4/3KM3fkeowsWRNs3Knfuhy3vMAgMDBmRN2bopS+YU1Rd4XNW0JlgVMEUWCIpl+yGepgCW1eMtl5kwRUaswXeKYE3eBsQidLTTA45Wlly+ww/7GRN88K+h17/TGekyv6eWTsUoma++7Zix+qgOeLgGmp37aE/B26dhWEXZ5Kz0/kWwwyOyTYjZNVLGflPm5tz7Uq5MbMfn9rrh94LE2KiRRKLNmfuaP++Cp9d0g3/wi006GKf1sBGGFTPEjkmm78ZvzWVouoJaj8BUTurPLQe5yHnIDjfdUvmzKPq+K/JBRmZWSJVVIgteO1sPcNN3CCC+BJt9lG14hizm+J2M3FqeS9YWLkbODCdjLMDHmSFUWhrst7f3ZJLyXNRZqGH/MJu8X2dBpB5sTGhlHdxkW0k1/jKqNh2V2SKiia6Bs38LuCguA7CbetyIR';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
