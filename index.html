@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="es" __gchrome_remoteframetoken="8a9b1372d0d7d85bc928535f76217eb6" class="light"><head>
+<html lang="es">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Gastos Hogar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#0f0f13;--surface:#1a1a22;--surface2:#22222e;--border:#2e2e3e;
@@ -385,64 +386,100 @@ tr:hover td{background:var(--surface2)}
 
 /* ─── SESSION INDICATOR ─── */
 .session-badge{font-size:10px;color:var(--text3);padding:2px 6px;background:var(--surface2);border-radius:5px;margin-left:6px;vertical-align:middle}
+/* ─── SIGN TOGGLE (+/-) ─── */
+.numpad-btn.sign{background:var(--surface2);color:var(--text2);font-size:18px}
+.numpad-btn.sign.negative{background:rgba(255,107,107,0.15);color:var(--accent2);border-color:rgba(255,107,107,0.4)}
+.numpad-btn.sign.negative:active{background:var(--accent2);color:#fff}
+.numpad-display.negative .numpad-prefix{color:var(--accent2)}
+.numpad-display.negative .numpad-value{color:var(--accent2)}
+.abono-badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;background:rgba(67,233,123,0.15);color:var(--accent3);margin-top:4px;letter-spacing:.05em;text-transform:uppercase}
+
+/* ─── SETTLEMENT REDESIGN — big, clear, high contrast ─── */
+.settlement-card{border-radius:18px;padding:20px 16px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+.settlement-card.even{background:rgba(67,233,123,0.12);border:2px solid rgba(67,233,123,0.4)}
+.settlement-card.a-owes{background:rgba(108,99,255,0.12);border:2px solid rgba(108,99,255,0.4)}
+.settlement-card.b-owes{background:rgba(236,72,153,0.12);border:2px solid rgba(236,72,153,0.4)}
+.settlement-card-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:10px}
+.settlement-card-arrow{font-size:28px;margin:0 8px}
+.settlement-card-names{font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.settlement-card-who-a{color:var(--accent)}
+.settlement-card-who-b{color:#ec4899}
+.settlement-card-amount{font-size:38px;font-weight:700;font-family:var(--mono);line-height:1;margin-top:4px}
+.settlement-card.even .settlement-card-amount{color:var(--accent3)}
+.settlement-card.a-owes .settlement-card-amount{color:var(--accent)}
+.settlement-card.b-owes .settlement-card-amount{color:#ec4899}
+.settlement-card-note{font-size:11px;opacity:.65;margin-top:8px}
+
+/* ─── PRINT SELECTOR ─── */
+.print-option{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface2);border-radius:12px;margin-bottom:8px;cursor:pointer;border:1.5px solid transparent;transition:border-color .2s}
+.print-option.selected{border-color:var(--accent)}
+.print-option input[type=radio]{accent-color:var(--accent);width:16px;height:16px}
+.print-option-label{font-size:14px;font-weight:600}
+.print-option-sub{font-size:11px;color:var(--text2);margin-top:1px}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
-<body data-__gcrweb-innertext-processed="D15D4C26ECF4C62CACB4013779750C44">
+<body>
 <!-- ══ LOGIN SCREEN ══ -->
-<div id="screen-login" style="display: none;">
+<div id="screen-login" style="display:none">
   <div class="auth-logo">🏠</div>
   <div class="auth-title">Gastos Hogar</div>
   <div class="auth-sub" id="login-sub">Tu gestor familiar privado</div>
   <div class="auth-card">
     <label class="auth-label" for="login-pwd">Contraseña</label>
-    <input type="password" class="auth-input" id="login-pwd" placeholder="••••••••" autocomplete="current-password" enterkeyhint="go" __gchrome_uniqueid="1">
-    <button class="auth-btn" id="login-btn" onclick="doLogin()" disabled="">🔓 Abriendo…</button>
+    <input type="password" class="auth-input" id="login-pwd" placeholder="••••••••"
+      autocomplete="current-password" enterkeyhint="go">
+    <button class="auth-btn" id="login-btn" onclick="doLogin()">Abrir 🔐</button>
     <div class="auth-err" id="login-err"></div>
   </div>
 </div>
 
 <!-- ══ SETUP WIZARD ══ -->
-<div id="screen-setup" style="display: none;">
+<div id="screen-setup" style="display:none">
   <div class="auth-logo">🏠</div>
   <div class="auth-title">Primera configuración</div>
   <div class="auth-sub">Solo tienes que hacer esto una vez</div>
   <div class="auth-card">
     <div class="setup-steps">
-      <div class="setup-step done" id="step-dot-0"></div>
-      <div class="setup-step done" id="step-dot-1"></div>
-      <div class="setup-step active" id="step-dot-2"></div>
+      <div class="setup-step active" id="step-dot-0"></div>
+      <div class="setup-step" id="step-dot-1"></div>
+      <div class="setup-step" id="step-dot-2"></div>
     </div>
 
     <!-- Step 0: Password -->
-    <div id="setup-step-0" style="display: none;">
+    <div id="setup-step-0">
       <div class="setup-step-title">🔑 Elige una contraseña</div>
       <div class="setup-step-sub">Cifrará todos tus datos con AES-256. Sin ella, nadie puede ver nada.</div>
       <label class="auth-label">Contraseña</label>
-      <input type="password" class="auth-input" id="setup-pwd1" placeholder="Mínimo 8 caracteres" autocomplete="new-password" oninput="updateStrength()" __gchrome_uniqueid="2">
-      <div class="pwd-strength" id="pwd-strength-wrap" style="display: block;">
-        <div class="pwd-strength-bar"><div class="pwd-strength-fill" id="pwd-strength-bar" style="width: 80%; background: rgb(102, 204, 153);"></div></div>
-        <div class="pwd-strength-text" id="pwd-strength-text" style="color: rgb(102, 204, 153);">Buena</div>
+      <input type="password" class="auth-input" id="setup-pwd1" placeholder="Mínimo 8 caracteres"
+        autocomplete="new-password" oninput="updateStrength()">
+      <div class="pwd-strength" id="pwd-strength-wrap" style="display:none">
+        <div class="pwd-strength-bar"><div class="pwd-strength-fill" id="pwd-strength-bar"></div></div>
+        <div class="pwd-strength-text" id="pwd-strength-text"></div>
       </div>
       <label class="auth-label">Confirmar contraseña</label>
-      <input type="password" class="auth-input" id="setup-pwd2" placeholder="Repite la contraseña" autocomplete="new-password" enterkeyhint="next" __gchrome_uniqueid="3">
+      <input type="password" class="auth-input" id="setup-pwd2" placeholder="Repite la contraseña"
+        autocomplete="new-password" enterkeyhint="next">
       <button class="auth-btn" onclick="setupStep0Next()">Siguiente →</button>
       <div class="auth-err" id="setup-err-0"></div>
     </div>
 
     <!-- Step 1: GitHub -->
-    <div id="setup-step-1" style="display: none;">
+    <div id="setup-step-1" style="display:none">
       <div class="setup-step-title">☁️ Conectar con GitHub</div>
       <div class="setup-step-sub">El archivo se guardará cifrado en tu repositorio. Sin GitHub, los datos viven solo en este dispositivo.</div>
       <label class="auth-label">Token GitHub (ghp_...)</label>
-      <input type="password" class="auth-input" id="setup-gh-token" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" __gchrome_uniqueid="4">
+      <input type="password" class="auth-input" id="setup-gh-token" placeholder="ghp_xxxxxxxxxxxx"
+        autocomplete="off">
       <label class="auth-label">Repositorio (usuario/repo)</label>
-      <input type="text" class="auth-input" id="setup-gh-repo" placeholder="tuusuario/gastos-hogar" autocomplete="off" enterkeyhint="done" __gchrome_uniqueid="5">
+      <input type="text" class="auth-input" id="setup-gh-repo" placeholder="tuusuario/gastos-hogar"
+        autocomplete="off" enterkeyhint="done">
       <label class="auth-label">Archivo</label>
-      <input type="text" class="auth-input" id="setup-gh-file" placeholder="index.html" value="index.html" __gchrome_uniqueid="6">
+      <input type="text" class="auth-input" id="setup-gh-file" placeholder="index.html" value="index.html">
       <div style="display:flex;gap:8px;margin-top:4px">
         <button class="auth-btn" onclick="setupStep1Test()" style="flex:1">🔌 Validar token</button>
       </div>
-      <div class="gh-test-result ok" id="gh-test-result" style="display: block;">✅ Conectado — bmla72-collab/Gastos (público)</div>
+      <div class="gh-test-result" id="gh-test-result"></div>
       <div style="display:flex;gap:8px;margin-top:10px">
         <button class="auth-btn secondary" onclick="setupGoBack(0)" style="flex:0 0 auto;padding:15px 20px">←</button>
         <button class="auth-btn" id="setup-step1-next" onclick="setupStep1Next()" style="flex:1">Siguiente →</button>
@@ -454,28 +491,28 @@ tr:hover td{background:var(--surface2)}
     </div>
 
     <!-- Step 2: Done -->
-    <div id="setup-step-2" style="display: block;">
+    <div id="setup-step-2" style="display:none">
       <div style="text-align:center;padding:10px 0">
         <div style="font-size:48px;margin-bottom:12px">✅</div>
         <div class="setup-step-title">¡Todo listo!</div>
-        <div class="setup-step-sub" id="setup-done-sub">Tus datos están cifrados con AES-256 y se subirán a GitHub automáticamente.</div>
-        <div id="setup-done-spinner" style="display: none; margin: 12px 0px; color: var(--text2); font-size: 13px;">⏳ Subiendo a GitHub…</div>
+        <div class="setup-step-sub" id="setup-done-sub">Tus datos están cifrados y guardados.</div>
+        <div id="setup-done-spinner" style="display:none;margin:12px 0;color:var(--text2);font-size:13px">⏳ Subiendo a GitHub…</div>
       </div>
-      <button class="auth-btn" id="setup-done-btn" onclick="setupFinish()" disabled="">⏳ Preparando…</button>
+      <button class="auth-btn" id="setup-done-btn" onclick="setupFinish()">Entrar a la app 🚀</button>
       <div class="auth-err" id="setup-err-2"></div>
     </div>
   </div>
 </div>
 
-<div id="app" style="display: flex;">
+<div id="app" style="display:none">
   <!-- Header -->
   <div class="app-header">
     <div>
       <div class="app-header-title">🏠 Gastos Hogar</div>
-      <div class="gh-status" id="gh-status"><div class="gh-dot connected" id="gh-dot"></div><span id="gh-label">bmla72-collab/Gastos/</span></div>
+      <div class="gh-status" id="gh-status"><div class="gh-dot" id="gh-dot"></div><span id="gh-label">Sin GitHub · modo prueba</span></div>
     </div>
     <div class="header-actions">
-      <div class="icon-btn" onclick="toggleTheme()">☀️</div>
+      <div class="icon-btn" onclick="toggleTheme()">🌙</div>
       <div class="icon-btn" onclick="doLogout()" title="Cerrar sesión">🔒</div>
       <div class="icon-btn" onclick="openSettings()">⚙️</div>
     </div>
@@ -483,8 +520,8 @@ tr:hover td{background:var(--surface2)}
 
   <!-- Tab bar -->
   <div class="tab-bar">
-    <button class="tab-btn" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
-    <button class="tab-btn active" onclick="switchTab(1)" id="tab1"><span>📋</span>Gastos</button>
+    <button class="tab-btn active" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
+    <button class="tab-btn" onclick="switchTab(1)" id="tab1"><span>📋</span>Gastos</button>
     <button class="tab-btn" onclick="switchTab(2)" id="tab2"><span>📊</span>Análisis</button>
     <button class="tab-btn" onclick="switchTab(3)" id="tab3"><span>📅</span>Cierres</button>
     <button class="tab-btn" onclick="switchTab(4)" id="tab4"><span>📝</span>Historial</button>
@@ -493,34 +530,13 @@ tr:hover td{background:var(--surface2)}
   <div class="tab-content">
 
     <!-- ══ TAB 0: INICIO / NUEVO GASTO ══ -->
-    <div class="tab-pane" id="pane0">
-      <div id="today-summary">
-    <div class="today-bar" style="flex-direction:column;align-items:stretch;gap:4px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div><div class="today-label">Hoy</div><div class="today-count">4 gastos</div></div>
-        <div class="today-val">240,00 €</div>
-      </div>
-      <div class="today-items">
-        <div class="today-item">
-          <span>🍽️ Dd</span>
-          <span class="today-item-amt">10,00 €</span>
-        </div><div class="today-item">
-          <span>✈️ 5/</span>
-          <span class="today-item-amt">105,00 €</span>
-        </div><div class="today-item">
-          <span>📱 Gg</span>
-          <span class="today-item-amt">5,00 €</span>
-        </div><div class="today-item">
-          <span>✈️ V</span>
-          <span class="today-item-amt">120,00 €</span>
-        </div>
-      </div>
-    </div></div>
-      <div id="active-period-banner"><div class="period-indicator">📅 Cierre activo: <strong>Marzo 30</strong> · desde 30/03/2026</div></div>
+    <div class="tab-pane active" id="pane0">
+      <div id="today-summary"></div>
+      <div id="active-period-banner"></div>
 
       <div class="form-section">
         <label class="form-label">Importe *</label>
-        <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()" __gchrome_uniqueid="7"><option value="EUR">EUR — Euro</option><option value="USD">USD — Dólar estadounidense</option><option value="GBP">GBP — Libra esterlina</option><option value="CHF">CHF — Franco suizo</option><option value="JPY">JPY — Yen japonés</option><option value="CNY">CNY — Yuan chino</option><option value="MXN">MXN — Peso mexicano</option><option value="ARS">ARS — Peso argentino</option><option value="CLP">CLP — Peso chileno</option><option value="COP">COP — Peso colombiano</option><option value="PEN">PEN — Sol peruano</option><option value="BRL">BRL — Real brasileño</option><option value="CAD">CAD — Dólar canadiense</option><option value="AUD">AUD — Dólar australiano</option><option value="NZD">NZD — Dólar neozelandés</option><option value="SEK">SEK — Corona sueca</option><option value="NOK">NOK — Corona noruega</option><option value="DKK">DKK — Corona danesa</option><option value="PLN">PLN — Esloti polaco</option><option value="CZK">CZK — Corona checa</option><option value="HUF">HUF — Forinto húngaro</option><option value="RON">RON — Leu rumano</option><option value="TRY">TRY — Lira turca</option><option value="RUB">RUB — Rublo ruso</option><option value="INR">INR — Rupia india</option><option value="IDR">IDR — Rupia indonesia</option><option value="THB">THB — Baht tailandés</option><option value="VND">VND — Dong vietnamita</option><option value="PHP">PHP — Peso filipino</option><option value="MYR">MYR — Ringgit malayo</option><option value="SGD">SGD — Dólar de Singapur</option><option value="HKD">HKD — Dólar de Hong Kong</option><option value="TWD">TWD — Dólar taiwánés</option><option value="KRW">KRW — Won surcoreano</option><option value="SAR">SAR — Riyal saudí</option><option value="AED">AED — Dírham de EAU</option><option value="QAR">QAR — Riyal catarí</option><option value="KWD">KWD — Dinar kuwaití</option><option value="EGP">EGP — Libra egipcia</option><option value="MAD">MAD — Dírham marroquí</option><option value="ZAR">ZAR — Rand sudafricano</option><option value="NGN">NGN — Naira nigeriana</option><option value="KES">KES — Chelín keniano</option><option value="ILS">ILS — Séquel israelí</option><option value="PKR">PKR — Rupia pakistaní</option><option value="BDT">BDT — Taka bangladeshés</option><option value="CUP">CUP — Peso cubano</option><option value="UYU">UYU — Peso uruguayo</option><option value="PYG">PYG — Guaraní paraguayo</option><option value="BOB">BOB — Boliviano</option><option value="GTQ">GTQ — Quetzal guatemalteco</option><option value="CRC">CRC — Colón costarricense</option><option value="DOP">DOP — Peso dominicano</option><option value="GEL">GEL — Lari georgiano</option><option value="KZT">KZT — Tenge kazajo</option><option value="ISK">ISK — Corona islandesa</option><option value="BAM">BAM — Marco de Bosnia</option><option value="RSD">RSD — Dinar serbio</option><option value="UAH">UAH — Grivna ucraniana</option><option value="AMD">AMD — Dram armenio</option><option value="AZN">AZN — Manat azerbaiyano</option><option value="MNT">MNT — Tugrik mongol</option></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
+        <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()"></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
         <div class="numpad-display" id="numpad-display" onclick="focusNumpad()">
           <span class="numpad-prefix" id="numpad-prefix">€</span>
           <span class="numpad-value placeholder" id="numpad-shown">0,00</span>
@@ -535,6 +551,7 @@ tr:hover td{background:var(--surface2)}
           <button class="numpad-btn" onclick="numpadKey('1')">1</button>
           <button class="numpad-btn" onclick="numpadKey('2')">2</button>
           <button class="numpad-btn" onclick="numpadKey('3')">3</button>
+          <button class="numpad-btn sign" id="numpad-sign" onclick="numpadKey('sign')">+/−</button>
           <button class="numpad-btn" onclick="numpadKey('0')">0</button>
           <button class="numpad-btn" onclick="numpadKey(',')">,</button>
           <button class="numpad-btn del" onclick="numpadKey('del')">⌫</button>
@@ -543,31 +560,7 @@ tr:hover td{background:var(--surface2)}
 
       <div class="form-section">
         <label class="form-label">Categoría *</label>
-        <div class="cat-grid" id="cat-grid"><div class="cat-chip" id="chip-restaurante" onclick="selectCat('restaurante')">
-      <span class="cat-chip-icon">🍽️</span>
-      <span class="cat-chip-label">Restaurante / Ocio</span>
-    </div><div class="cat-chip" id="chip-alimentacion" onclick="selectCat('alimentacion')">
-      <span class="cat-chip-icon">🛒</span>
-      <span class="cat-chip-label">Alimentación</span>
-    </div><div class="cat-chip" id="chip-servicios" onclick="selectCat('servicios')">
-      <span class="cat-chip-icon">💡</span>
-      <span class="cat-chip-label">Servicios</span>
-    </div><div class="cat-chip" id="chip-transporte" onclick="selectCat('transporte')">
-      <span class="cat-chip-icon">🚗</span>
-      <span class="cat-chip-label">Transporte</span>
-    </div><div class="cat-chip" id="chip-viajes" onclick="selectCat('viajes')">
-      <span class="cat-chip-icon">✈️</span>
-      <span class="cat-chip-label">Viajes</span>
-    </div><div class="cat-chip" id="chip-hogar" onclick="selectCat('hogar')">
-      <span class="cat-chip-icon">🏠</span>
-      <span class="cat-chip-label">Hogar / Hipoteca</span>
-    </div><div class="cat-chip" id="chip-suscripciones" onclick="selectCat('suscripciones')">
-      <span class="cat-chip-icon">📱</span>
-      <span class="cat-chip-label">Suscripciones</span>
-    </div><div class="cat-chip" id="chip-otros" onclick="selectCat('otros')">
-      <span class="cat-chip-icon">📦</span>
-      <span class="cat-chip-label">Otros</span>
-    </div></div>
+        <div class="cat-grid" id="cat-grid"></div>
       </div>
 
       <div class="form-row" style="margin-bottom:14px">
@@ -577,18 +570,18 @@ tr:hover td{background:var(--surface2)}
         </div>
         <div>
           <label class="form-label">Cierre</label>
-          <select class="form-select" id="f-period" __gchrome_uniqueid="8"><option value="">Sin cierre</option><option value="1774901475303">Marzo 30 🔓</option></select>
+          <select class="form-select" id="f-period"></select>
         </div>
       </div>
 
       <div class="form-section">
         <label class="form-label">Concepto *</label>
-        <input type="text" class="form-input" id="f-concept" placeholder="Ej: Mercadona semanal" autocomplete="off" autocorrect="off" __gchrome_uniqueid="9">
+        <input type="text" class="form-input" id="f-concept" placeholder="Ej: Mercadona semanal" autocomplete="off" autocorrect="off">
       </div>
 
       <div class="form-section">
         <label class="form-label">Observaciones</label>
-        <textarea class="form-textarea" id="f-obs" placeholder="Notas opcionales…" __gchrome_uniqueid="10"></textarea>
+        <textarea class="form-textarea" id="f-obs" placeholder="Notas opcionales…"></textarea>
       </div>
 
       <div class="form-section">
@@ -606,14 +599,14 @@ tr:hover td{background:var(--surface2)}
             <div class="toggle-label">No cuenta</div>
             <div class="toggle-sub">Excluir del total</div>
           </div>
-          <button class="toggle" id="f-excluded" onclick="this.classList.toggle('on')" aria-label="Excluir del total"></button>
+          <button class="toggle" id="f-excluded" onclick="toggleExcluded('f')" aria-label="Excluir del total"></button>
         </div>
         <div class="toggle-wrap" style="flex:1;border-bottom:none;padding:8px 12px;background:var(--surface2);border-radius:12px;margin:0">
           <div>
             <div class="toggle-label">Prestado</div>
             <div class="toggle-sub">Lo pagas tú por otro</div>
           </div>
-          <button class="toggle" id="f-loaned" onclick="this.classList.toggle('on')" aria-label="Prestado"></button>
+          <button class="toggle" id="f-loaned" onclick="toggleLoaned('f')" aria-label="Prestado"></button>
         </div>
       </div>
 
@@ -621,7 +614,7 @@ tr:hover td{background:var(--surface2)}
     </div>
 
     <!-- ══ TAB 1: LISTA GASTOS ══ -->
-    <div class="tab-pane active" id="pane1">
+    <div class="tab-pane" id="pane1">
       <!-- left col on desktop -->
       <div id="list-left">
         <div class="filter-panel">
@@ -631,20 +624,20 @@ tr:hover td{background:var(--surface2)}
           </div>
           <div class="filter-row" style="margin-top:8px">
             <div class="filter-group"><label class="filter-label">Categoría</label>
-              <select class="filter-select" id="fl-cat" onchange="applyListFilters()" __gchrome_uniqueid="11"><option value="">Todas</option><option value="restaurante">🍽️ Restaurante / Ocio</option><option value="alimentacion">🛒 Alimentación</option><option value="servicios">💡 Servicios</option><option value="transporte">🚗 Transporte</option><option value="viajes">✈️ Viajes</option><option value="hogar">🏠 Hogar / Hipoteca</option><option value="suscripciones">📱 Suscripciones</option><option value="otros">📦 Otros</option></select>
+              <select class="filter-select" id="fl-cat" onchange="applyListFilters()"><option value="">Todas</option></select>
             </div>
             <div class="filter-group"><label class="filter-label">Cierre</label>
-              <select class="filter-select" id="fl-period" onchange="applyListFilters()" __gchrome_uniqueid="12"><option value="">Todos</option><option value="1774901475303">Marzo 30 🔓</option></select>
+              <select class="filter-select" id="fl-period" onchange="applyListFilters()"><option value="">Todos</option></select>
             </div>
           </div>
           <div class="filter-row" style="margin-top:8px">
-            <div class="filter-group"><label class="filter-label">Mín €</label><input type="number" class="filter-input" id="fl-min" placeholder="0" inputmode="decimal" onchange="applyListFilters()" __gchrome_uniqueid="13"></div>
-            <div class="filter-group"><label class="filter-label">Máx €</label><input type="number" class="filter-input" id="fl-max" placeholder="∞" inputmode="decimal" onchange="applyListFilters()" __gchrome_uniqueid="14"></div>
-            <div class="filter-group" style="min-width:100px"><label class="filter-label">Buscar</label><input type="text" class="filter-input" id="fl-search" placeholder="concepto…" oninput="applyListFilters()" __gchrome_uniqueid="15"></div>
+            <div class="filter-group"><label class="filter-label">Mín €</label><input type="number" class="filter-input" id="fl-min" placeholder="0" inputmode="decimal" onchange="applyListFilters()"></div>
+            <div class="filter-group"><label class="filter-label">Máx €</label><input type="number" class="filter-input" id="fl-max" placeholder="∞" inputmode="decimal" onchange="applyListFilters()"></div>
+            <div class="filter-group" style="min-width:100px"><label class="filter-label">Buscar</label><input type="text" class="filter-input" id="fl-search" placeholder="concepto…" oninput="applyListFilters()"></div>
           </div>
           <div class="filter-row" style="margin-top:8px">
             <div class="filter-group"><label class="filter-label">Quién paga</label>
-              <select class="filter-select" id="fl-payer" onchange="applyListFilters()" __gchrome_uniqueid="16">
+              <select class="filter-select" id="fl-payer" onchange="applyListFilters()">
                 <option value="">Todos</option>
                 <option value="a">👤 Blas</option>
                 <option value="b">👤 Corinna</option>
@@ -652,7 +645,7 @@ tr:hover td{background:var(--surface2)}
               </select>
             </div>
             <div class="filter-group"><label class="filter-label">Mostrar</label>
-              <select class="filter-select" id="fl-excl" onchange="applyListFilters()" __gchrome_uniqueid="17">
+              <select class="filter-select" id="fl-excl" onchange="applyListFilters()">
                 <option value="">Todos</option>
                 <option value="included">Solo activos</option>
                 <option value="excluded">Solo excluidos</option>
@@ -663,176 +656,17 @@ tr:hover td{background:var(--surface2)}
             <button class="btn-secondary" onclick="clearListFilters()" style="flex:1;font-size:12px;padding:7px">🗑 Limpiar</button>
           </div>
         </div>
-        <div id="list-totals-bar">
-    <div class="totals-bar">
-      <div><div class="totals-bar-label">Total activo</div><div class="totals-bar-val">250,32 €</div></div>
-      <div style="text-align:right"><div class="totals-bar-count">5 gastos</div><div style="font-size:10px;color:var(--text3)">1 excluido (10,00 €)</div></div>
-    </div></div>
-        <div id="expense-list"><div class="expense-card selected-card excluded" id="card-1774926776496k4gcu6b8yfb" onclick="selectCard('1774926776496k4gcu6b8yfb')">
-      <div class="card-row">
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <div class="expense-concept">Dd</div>
-            <div class="expense-period-tag">Marzo 30</div>
-          </div>
-          <div class="expense-meta">31/03/2026</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-            <div class="expense-cat" style="color:#f97316">🍽️ Restaurante / Ocio</div>
-          </div>
-          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
-            
-            <span class="excluded-badge">⊘ No cuenta</span>
-              <span class="excluded-badge" style="background:rgba(250,204,21,0.15);color:var(--accent4)">💳 Prestado</span>
-          </div>
-          
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:10px;flex-shrink:0">
-          <div style="text-align:right">
-            <div class="expense-amount">10,00 €</div>
-            
-          </div>
-          <div class="card-actions">
-            <button class="card-btn edit" onclick="event.stopPropagation();openEditExpense('1774926776496k4gcu6b8yfb')" title="Editar">✏️</button>
-            <button class="card-btn del" id="del-btn-1774926776496k4gcu6b8yfb" onclick="event.stopPropagation();confirmDelete('1774926776496k4gcu6b8yfb',this)" title="Eliminar">🗑</button>
-          </div>
-        </div>
-      </div>
-    </div><div class="expense-card " id="card-1774926845894s80nqb9krw9" onclick="selectCard('1774926845894s80nqb9krw9')">
-      <div class="card-row">
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <div class="expense-concept">5/</div>
-            <div class="expense-period-tag">Marzo 30</div>
-          </div>
-          <div class="expense-meta">31/03/2026</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-            <div class="expense-cat" style="color:#a78bfa">✈️ Viajes</div>
-          </div>
-          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
-            <span class="payer-badge-b">👤 Corinna</span>
-            
-              <span class="excluded-badge" style="background:rgba(250,204,21,0.15);color:var(--accent4)">💳 Prestado</span>
-          </div>
-          
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:10px;flex-shrink:0">
-          <div style="text-align:right">
-            <div class="expense-amount">105,00 €</div>
-            
-          </div>
-          <div class="card-actions">
-            <button class="card-btn edit" onclick="event.stopPropagation();openEditExpense('1774926845894s80nqb9krw9')" title="Editar">✏️</button>
-            <button class="card-btn del" id="del-btn-1774926845894s80nqb9krw9" onclick="event.stopPropagation();confirmDelete('1774926845894s80nqb9krw9',this)" title="Eliminar">🗑</button>
-          </div>
-        </div>
-      </div>
-    </div><div class="expense-card " id="card-1774926875458mafofmpdkp" onclick="selectCard('1774926875458mafofmpdkp')">
-      <div class="card-row">
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <div class="expense-concept">Gg</div>
-            <div class="expense-period-tag">Marzo 30</div>
-          </div>
-          <div class="expense-meta">31/03/2026</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-            <div class="expense-cat" style="color:#ec4899">📱 Suscripciones</div>
-          </div>
-          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
-            <span class="payer-badge-b">👤 Corinna</span>
-            
-              <span class="excluded-badge" style="background:rgba(250,204,21,0.15);color:var(--accent4)">💳 Prestado</span>
-          </div>
-          
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:10px;flex-shrink:0">
-          <div style="text-align:right">
-            <div class="expense-amount">5,00 €</div>
-            
-          </div>
-          <div class="card-actions">
-            <button class="card-btn edit" onclick="event.stopPropagation();openEditExpense('1774926875458mafofmpdkp')" title="Editar">✏️</button>
-            <button class="card-btn del" id="del-btn-1774926875458mafofmpdkp" onclick="event.stopPropagation();confirmDelete('1774926875458mafofmpdkp',this)" title="Eliminar">🗑</button>
-          </div>
-        </div>
-      </div>
-    </div><div class="expense-card " id="card-1774926894255nbt1du1os5r" onclick="selectCard('1774926894255nbt1du1os5r')">
-      <div class="card-row">
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <div class="expense-concept">V</div>
-            <div class="expense-period-tag">Marzo 30</div>
-          </div>
-          <div class="expense-meta">31/03/2026</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-            <div class="expense-cat" style="color:#a78bfa">✈️ Viajes</div>
-          </div>
-          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
-            <span class="payer-badge-b">👤 Corinna</span>
-            
-              
-          </div>
-          
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:10px;flex-shrink:0">
-          <div style="text-align:right">
-            <div class="expense-amount">120,00 €</div>
-            
-          </div>
-          <div class="card-actions">
-            <button class="card-btn edit" onclick="event.stopPropagation();openEditExpense('1774926894255nbt1du1os5r')" title="Editar">✏️</button>
-            <button class="card-btn del" id="del-btn-1774926894255nbt1du1os5r" onclick="event.stopPropagation();confirmDelete('1774926894255nbt1du1os5r',this)" title="Eliminar">🗑</button>
-          </div>
-        </div>
-      </div>
-    </div><div class="expense-card " id="card-1774901507681afkeefdl8rm" onclick="selectCard('1774901507681afkeefdl8rm')">
-      <div class="card-row">
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <div class="expense-concept">Consum</div>
-            <div class="expense-period-tag">Marzo 30</div>
-          </div>
-          <div class="expense-meta">30/03/2026</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-            <div class="expense-cat" style="color:#22c55e">🛒 Alimentación</div>
-          </div>
-          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
-            
-            
-              
-          </div>
-          
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:10px;flex-shrink:0">
-          <div style="text-align:right">
-            <div class="expense-amount">20,32 €</div>
-            
-          </div>
-          <div class="card-actions">
-            <button class="card-btn edit" onclick="event.stopPropagation();openEditExpense('1774901507681afkeefdl8rm')" title="Editar">✏️</button>
-            <button class="card-btn del" id="del-btn-1774901507681afkeefdl8rm" onclick="event.stopPropagation();confirmDelete('1774901507681afkeefdl8rm',this)" title="Eliminar">🗑</button>
-          </div>
-        </div>
-      </div>
-    </div></div>
+        <div id="list-totals-bar"></div>
+        <div id="expense-list"></div>
       </div>
       <!-- right col on desktop -->
       <div id="list-right">
         <div class="detail-panel" id="detail-panel">
-    <div style="margin-bottom:16px">
-      <div style="font-size:22px;font-weight:700;font-family:var(--mono);color:var(--accent2)">10,00 €</div>
-      
-      <div style="font-size:16px;font-weight:600;margin-top:4px">Dd</div>
-      <div style="font-size:12px;color:var(--text2);margin-top:3px">31/03/2026</div>
-    </div>
-    <div class="stat-grid" style="grid-template-columns:1fr 1fr">
-      <div class="stat-card"><div class="stat-label">Categoría</div><div style="font-size:15px;font-weight:600;margin-top:2px">🍽️ Restaurante / Ocio</div></div>
-      <div class="stat-card"><div class="stat-label">Cierre</div><div style="font-size:15px;font-weight:600;margin-top:2px">Marzo 30</div></div>
-    </div>
-    
-    <div style="display:flex;gap:8px;margin-top:14px">
-      <button class="btn-primary" onclick="openEditExpense('1774926776496k4gcu6b8yfb')" style="flex:1">✏️ Editar</button>
-      <button class="btn-danger" id="del-btn-detail" onclick="confirmDelete('1774926776496k4gcu6b8yfb',this)">🗑 Eliminar</button>
-    </div></div>
+          <div class="detail-empty">
+            <div class="detail-empty-icon">👆</div>
+            <div style="font-size:13px">Toca un gasto para ver el detalle</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -840,17 +674,17 @@ tr:hover td{background:var(--surface2)}
     <div class="tab-pane" id="pane2">
       <div class="filter-panel">
         <div class="filter-row">
-          <div class="filter-group"><label class="filter-label">Desde</label><input type="date" class="filter-input" id="an-from" onchange="renderAnalysis()" __gchrome_uniqueid="38"></div>
+          <div class="filter-group"><label class="filter-label">Desde</label><input type="date" class="filter-input" id="an-from" onchange="renderAnalysis()"></div>
           <div class="filter-group"><label class="filter-label">Hasta</label><input type="date" class="filter-input" id="an-to" onchange="renderAnalysis()"></div>
           <div class="filter-group"><label class="filter-label">Cierre</label>
-            <select class="filter-select" id="an-period" onchange="renderAnalysis()" __gchrome_uniqueid="18"><option value="">Todos</option><option value="1774901475303">Marzo 30 🔓</option></select>
+            <select class="filter-select" id="an-period" onchange="renderAnalysis()"><option value="">Todos</option></select>
           </div>
         </div>
       </div>
       <div class="filter-panel" style="margin-bottom:10px">
         <div class="filter-row">
           <div class="filter-group"><label class="filter-label">Quién paga</label>
-            <select class="filter-select" id="an-payer" onchange="renderAnalysis()" __gchrome_uniqueid="19">
+            <select class="filter-select" id="an-payer" onchange="renderAnalysis()">
               <option value="">Todos</option>
               <option value="a">👤 Blas</option>
               <option value="b">👤 Corinna</option>
@@ -858,7 +692,7 @@ tr:hover td{background:var(--surface2)}
             </select>
           </div>
           <div class="filter-group"><label class="filter-label">Vista</label>
-            <select class="filter-select" id="an-view" onchange="renderAnalysis()" __gchrome_uniqueid="20">
+            <select class="filter-select" id="an-view" onchange="renderAnalysis()">
               <option value="general">General</option>
               <option value="balance">Balance personas</option>
               <option value="budget">Presupuesto</option>
@@ -871,78 +705,7 @@ tr:hover td{background:var(--surface2)}
         <button class="btn-secondary" onclick="exportJSON()">📤 JSON</button>
         <button class="btn-secondary" onclick="importJSON()">📥 Import</button>
       </div>
-      <div id="analysis-content">
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-label">Total activo</div><div class="stat-value" style="font-size:17px">250,32 €</div><div class="stat-sub">4 gastos · 1 excluidos</div></div>
-      <div class="stat-card"><div class="stat-label">Promedio gasto</div><div class="stat-value" style="font-size:17px">62,58 €</div><div class="stat-sub">por entrada</div></div>
-      <div class="stat-card"><div class="stat-label">Blas</div><div class="stat-value" style="font-size:15px">20,32 €</div><div class="stat-sub">1 gastos</div></div>
-      <div class="stat-card"><div class="stat-label">Corinna</div><div class="stat-value" style="font-size:15px">230,00 €</div><div class="stat-sub">3 gastos</div></div>
-    </div>
-
-    
-
-    
-    <div class="section-header"><div class="section-title">Por categoría</div></div>
-    <div style="margin-bottom:16px">
-      <div class="bar-row">
-          <div class="bar-header"><span>✈️ Viajes</span><span style="font-family:var(--mono);font-size:11px">225,00 € · 90%</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#a78bfa,#a78bfa88)"></div></div>
-        </div><div class="bar-row">
-          <div class="bar-header"><span>🛒 Alimentación</span><span style="font-family:var(--mono);font-size:11px">20,32 € · 8%</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:9%;background:linear-gradient(90deg,#22c55e,#22c55e88)"></div></div>
-        </div><div class="bar-row">
-          <div class="bar-header"><span>📱 Suscripciones</span><span style="font-family:var(--mono);font-size:11px">5,00 € · 2%</span></div>
-          <div class="bar-bg"><div class="bar-fill" style="width:2%;background:linear-gradient(90deg,#ec4899,#ec489988)"></div></div>
-        </div>
-    </div>
-
-    <div class="section-header" style="margin-top:16px"><div class="section-title">Tabla detallada</div></div>
-    <div class="table-wrap">
-    <table id="main-table">
-      <thead><tr>
-        <th onclick="sortTable('date')" class="">Fecha <span class="sort-icon">↕</span></th>
-        <th onclick="sortTable('concept')" class="">Concepto <span class="sort-icon">↕</span></th>
-        <th onclick="sortTable('cat')" class="sorted">Categoría <span class="sort-icon">↓</span></th>
-        <th onclick="sortTable('amount')" class="">Importe <span class="sort-icon">↓</span></th>
-        <th>Cierre</th>
-      </tr></thead>
-      <tbody>
-        <tr>
-          <td style="white-space:nowrap;color:var(--text2);font-size:12px">31/03/2026</td>
-          <td><div style="font-size:13px;font-weight:500">5/</div></td>
-          <td><span class="td-cat" style="color:#a78bfa">✈️ Viajes</span></td>
-          <td class="td-amt">105,00 €</td>
-          <td style="font-size:11px;color:var(--text2)">Marzo 30</td>
-        </tr><tr>
-          <td style="white-space:nowrap;color:var(--text2);font-size:12px">31/03/2026</td>
-          <td><div style="font-size:13px;font-weight:500">V</div></td>
-          <td><span class="td-cat" style="color:#a78bfa">✈️ Viajes</span></td>
-          <td class="td-amt">120,00 €</td>
-          <td style="font-size:11px;color:var(--text2)">Marzo 30</td>
-        </tr><tr>
-          <td style="white-space:nowrap;color:var(--text2);font-size:12px">31/03/2026</td>
-          <td><div style="font-size:13px;font-weight:500">Gg</div></td>
-          <td><span class="td-cat" style="color:#ec4899">📱 Suscripciones</span></td>
-          <td class="td-amt">5,00 €</td>
-          <td style="font-size:11px;color:var(--text2)">Marzo 30</td>
-        </tr><tr>
-          <td style="white-space:nowrap;color:var(--text2);font-size:12px">31/03/2026</td>
-          <td><div style="font-size:13px;font-weight:500">Dd</div></td>
-          <td><span class="td-cat" style="color:#f97316">🍽️ Restaurante / Ocio</span></td>
-          <td class="td-amt">10,00 €</td>
-          <td style="font-size:11px;color:var(--text2)">Marzo 30</td>
-        </tr><tr>
-          <td style="white-space:nowrap;color:var(--text2);font-size:12px">30/03/2026</td>
-          <td><div style="font-size:13px;font-weight:500">Consum</div></td>
-          <td><span class="td-cat" style="color:#22c55e">🛒 Alimentación</span></td>
-          <td class="td-amt">20,32 €</td>
-          <td style="font-size:11px;color:var(--text2)">Marzo 30</td>
-        </tr>
-        <tr class="td-total"><td colspan="3" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">TOTAL · 5 gastos</td><td class="td-amt">260,32 €</td><td></td></tr>
-      </tbody>
-    </table>
-  </div>
-    </div>
+      <div id="analysis-content"></div>
     </div>
 
     <!-- ══ TAB 3: CIERRES ══ -->
@@ -951,26 +714,7 @@ tr:hover td{background:var(--surface2)}
         <button class="btn-primary" onclick="openNewPeriod()" style="flex:1"><span>➕</span> Nuevo cierre</button>
       </div>
 
-      <div id="periods-list"><div class="period-card period-active">
-      <span class="period-badge open">🔓 Abierto</span>
-      <div class="period-title">Marzo 30</div>
-      <div class="period-dates">Desde 30/03/2026 (en curso)</div>
-      <div class="period-totals">
-        <div class="period-total-item"><div class="period-total-label">Total</div><div class="period-total-val">250,32 €</div></div>
-        <div class="period-total-item"><div class="period-total-label">Blas</div><div class="period-total-val" style="color:var(--accent)">20,32 €</div></div>
-        <div class="period-total-item"><div class="period-total-label">Corinna</div><div class="period-total-val" style="color:#ec4899">230,00 €</div></div>
-      </div>
-      <div style="margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:10px;font-size:12px;font-weight:600;color:var(--text2)">
-        💰 Blas debe a Corinna: 159,84 €
-      </div>
-      <div class="period-actions">
-        <button class="btn-secondary" onclick="openEditPeriod('1774901475303')">✏️ Editar</button>
-        <button class="btn-warn" onclick="closePeriod('1774901475303')">🔒 Cerrar</button>
-        <button class="btn-primary" onclick="openPeriodSummary('1774901475303')" style="flex:1;min-height:36px;font-size:13px">📊 Resumen</button>
-        <button class="btn-secondary" onclick="filterByPeriod('1774901475303')">🔍 Gastos</button>
-        <button class="btn-danger" onclick="deletePeriod('1774901475303')">🗑</button>
-      </div>
-    </div></div>
+      <div id="periods-list"></div>
     </div>
 
     <!-- ══ TAB 4: HISTORIAL / AUDIT LOG ══ -->
@@ -996,11 +740,11 @@ tr:hover td{background:var(--surface2)}
     <div class="settings-row"><div><div class="settings-label">GitHub Sync</div><div class="settings-sub">Token personal de GitHub</div></div></div>
     <div style="margin-bottom:14px">
       <label class="form-label" style="margin-top:8px">Token (ghp_...)</label>
-      <input type="password" class="form-input" id="s-gh-token" placeholder="ghp_xxxxxxxx" autocomplete="off" __gchrome_uniqueid="21">
+      <input type="password" class="form-input" id="s-gh-token" placeholder="ghp_xxxxxxxx" autocomplete="off">
       <label class="form-label" style="margin-top:9px">Repo (usuario/repo)</label>
-      <input type="text" class="form-input" id="s-gh-repo" placeholder="tuusuario/gastos-hogar" __gchrome_uniqueid="22">
+      <input type="text" class="form-input" id="s-gh-repo" placeholder="tuusuario/gastos-hogar">
       <label class="form-label" style="margin-top:9px">Archivo</label>
-      <input type="text" class="form-input" id="s-gh-file" placeholder="index.html" __gchrome_uniqueid="23">
+      <input type="text" class="form-input" id="s-gh-file" placeholder="index.html">
     </div>
     <div style="display:flex;gap:8px;margin-bottom:18px">
       <button class="btn-success" onclick="saveGitHubConfig()" style="flex:1">💾 Guardar</button>
@@ -1008,62 +752,22 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="settings-row"><div><div class="settings-label">Cambiar contraseña</div></div></div>
     <div style="margin-bottom:14px;margin-top:9px">
-      <input type="password" class="form-input" id="s-newpwd1" placeholder="Nueva contraseña" style="margin-bottom:7px" __gchrome_uniqueid="24">
-      <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar" __gchrome_uniqueid="25">
+      <input type="password" class="form-input" id="s-newpwd1" placeholder="Nueva contraseña" style="margin-bottom:7px">
+      <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar">
       <button class="btn-primary" onclick="changePassword()" style="margin-top:8px">🔑 Cambiar</button>
     </div>
-    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">5 gastos · 1 cierres</div></div></div>
+    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">—</div></div></div>
     <div style="margin-top:10px;margin-bottom:4px">
       <button class="btn-danger" onclick="openDeleteModal()" style="width:100%">🗑 Gestionar borrado de datos…</button>
     </div>
     <div class="settings-row"><div><div class="settings-label">Nombres de los pagadores</div><div class="settings-sub">Cómo aparecen en la app</div></div></div>
     <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:18px">
-      <input type="text" class="form-input" id="s-payer-a" placeholder="Blas" style="flex:1" __gchrome_uniqueid="26">
-      <input type="text" class="form-input" id="s-payer-b" placeholder="Corinna" style="flex:1" __gchrome_uniqueid="27">
+      <input type="text" class="form-input" id="s-payer-a" placeholder="Blas" style="flex:1">
+      <input type="text" class="form-input" id="s-payer-b" placeholder="Corinna" style="flex:1">
       <button class="btn-secondary" onclick="savePayerNames()">💾</button>
     </div>
     <div class="settings-row" style="margin-top:8px"><div><div class="settings-label">Presupuesto mensual por categoría</div><div class="settings-sub">En euros — 0 = sin límite</div></div></div>
-    <div id="budget-inputs" style="margin-top:10px;margin-bottom:14px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">🍽️</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Restaurante / Ocio</span>
-      <input type="number" id="budget-restaurante" value="200" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">🛒</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Alimentación</span>
-      <input type="number" id="budget-alimentacion" value="450" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">💡</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Servicios</span>
-      <input type="number" id="budget-servicios" value="260" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">🚗</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Transporte</span>
-      <input type="number" id="budget-transporte" value="120" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">✈️</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Viajes</span>
-      <input type="number" id="budget-viajes" value="" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">🏠</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Hogar / Hipoteca</span>
-      <input type="number" id="budget-hogar" value="950" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">📱</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Suscripciones</span>
-      <input type="number" id="budget-suscripciones" value="25" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <span style="font-size:16px;flex-shrink:0">📦</span>
-      <span style="flex:1;font-size:13px;font-weight:600">Otros</span>
-      <input type="number" id="budget-otros" value="150" placeholder="0" class="form-input" style="width:90px;padding:7px 10px;font-size:13px;text-align:right" inputmode="decimal" min="0">
-      <span style="font-size:12px;color:var(--text2)">€</span>
-    </div></div>
+    <div id="budget-inputs" style="margin-top:10px;margin-bottom:14px"></div>
     <button class="btn-success" onclick="saveBudgets()" style="width:100%;margin-bottom:8px">💾 Guardar presupuestos</button>
     <button class="btn-secondary" onclick="closeModal('modal-settings')" style="width:100%;margin-top:4px">Cerrar</button>
   </div>
@@ -1080,35 +784,11 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="del-modal-section">
       <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Contraseña de confirmación</div>
-      <input type="password" class="del-pwd-input" id="del-pwd" placeholder="Contraseña de la app" autocomplete="off" __gchrome_uniqueid="28">
+      <input type="password" class="del-pwd-input" id="del-pwd" placeholder="Contraseña de la app" autocomplete="off">
     </div>
     <div class="del-modal-section">
       <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Borrar por cierre</div>
-      <div id="del-periods-list"><div class="del-period-item">
-        <div>
-          <div class="del-period-name">Agosto 2025</div>
-          <div class="del-period-meta">21 gastos · 3128,31 €</div>
-        </div>
-        <button class="btn-danger" data-pid="p4" onclick="deletePeriodProtected(this.dataset.pid)" style="padding:7px 12px;font-size:12px;min-height:34px">🗑 Borrar</button>
-      </div><div class="del-period-item">
-        <div>
-          <div class="del-period-name">Julio 2025</div>
-          <div class="del-period-meta">17 gastos · 2301,43 €</div>
-        </div>
-        <button class="btn-danger" data-pid="p3" onclick="deletePeriodProtected(this.dataset.pid)" style="padding:7px 12px;font-size:12px;min-height:34px">🗑 Borrar</button>
-      </div><div class="del-period-item">
-        <div>
-          <div class="del-period-name">Junio 2025</div>
-          <div class="del-period-meta">16 gastos · 3518,39 €</div>
-        </div>
-        <button class="btn-danger" data-pid="p2" onclick="deletePeriodProtected(this.dataset.pid)" style="padding:7px 12px;font-size:12px;min-height:34px">🗑 Borrar</button>
-      </div><div class="del-period-item">
-        <div>
-          <div class="del-period-name">Mayo 2025</div>
-          <div class="del-period-meta">15 gastos · 1811,39 €</div>
-        </div>
-        <button class="btn-danger" data-pid="p1" onclick="deletePeriodProtected(this.dataset.pid)" style="padding:7px 12px;font-size:12px;min-height:34px">🗑 Borrar</button>
-      </div></div>
+      <div id="del-periods-list"></div>
     </div>
     <div class="del-modal-section">
       <div style="font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Zona de peligro</div>
@@ -1119,50 +799,35 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
+<!-- MODAL: Print Selector -->
+<div class="modal-overlay" id="modal-print-select">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🖨️ Selecciona qué imprimir</div>
+    <label class="print-option selected" onclick="selectPrintOpt(this,'summary')">
+      <input type="radio" name="print-opt" value="summary" checked>
+      <div><div class="print-option-label">Solo resumen</div><div class="print-option-sub">Totales, balance y liquidación final</div></div>
+    </label>
+    <label class="print-option" onclick="selectPrintOpt(this,'full')">
+      <input type="radio" name="print-opt" value="full">
+      <div><div class="print-option-label">Resumen completo</div><div class="print-option-sub">Resumen + todos los gastos + estadísticas por categoría</div></div>
+    </label>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn-primary" onclick="doPrint()" style="flex:1">🖨️ Imprimir / Guardar PDF</button>
+      <button class="btn-secondary" onclick="closeModal('modal-print-select')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: Period Summary -->
 <div class="modal-overlay" id="modal-summary">
   <div class="modal-sheet" style="max-height:92vh">
     <div class="modal-handle"></div>
-    <div class="modal-title" id="summary-modal-title">📊 Marzo 30</div>
-    <div id="summary-modal-content">
-    <div class="summary-section">
-      <div class="summary-section-title">Resumen general</div>
-      <div class="summary-row"><span>Período</span><span>30/03/2026 → en curso</span></div>
-      <div class="summary-row"><span>Total gastos activos</span><span class="summary-total">140,32 €</span></div>
-      <div class="summary-row"><span>Gastos excluidos</span><span class="summary-total">10,00 €</span></div>
-      <div class="summary-row"><span>Número de entradas</span><span>5 (4 activos)</span></div>
-    </div>
-    <div class="summary-section">
-      <div class="summary-section-title">Por persona</div>
-      <div class="summary-row"><span>💙 Blas pagó</span><span class="summary-total" style="color:var(--accent)">20,32 €</span></div>
-      <div class="summary-row"><span>💗 Corinna pagó</span><span class="summary-total" style="color:#ec4899">230,00 €</span></div>
-      <div class="summary-row" style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border)"><span>Cada uno debería pagar</span><span class="summary-total">70,16 €</span></div>
-      
-      <div class="summary-row"><span>💳 Corinna prestó a Blas</span><span class="summary-total" style="color:#ec4899">110,00 €</span></div>
-
-    </div>
-    <div class="settlement-box owes">
-      <div class="settlement-label">Liquidación final</div>
-      <div class="settlement-text">Blas debe a Corinna: 159,84 €</div>
-      <div class="settlement-amount">159,84 €</div>
-      <div style="font-size:12px;color:var(--text2);margin-top:8px">Incluye préstamos:  Corinna prestó 110,00 €</div>
-    </div>
-    <div class="summary-section">
-      <div class="summary-section-title">Por categoría</div>
-      <div class="summary-row">
-        <span class="summary-row-cat">✈️ Viajes</span>
-        <span class="summary-total">225,00 € <span style="color:var(--text3);font-size:10px">160%</span></span>
-      </div><div class="summary-row">
-        <span class="summary-row-cat">🛒 Alimentación</span>
-        <span class="summary-total">20,32 € <span style="color:var(--text3);font-size:10px">14%</span></span>
-      </div><div class="summary-row">
-        <span class="summary-row-cat">📱 Suscripciones</span>
-        <span class="summary-total">5,00 € <span style="color:var(--text3);font-size:10px">4%</span></span>
-      </div>
-    </div></div>
+    <div class="modal-title" id="summary-modal-title">📊 Resumen del cierre</div>
+    <div id="summary-modal-content"></div>
     <div class="summary-export-btns">
-      <button class="btn-success" onclick="exportSummaryExcel()" style="flex:1">📥 Excel</button>
-      <button class="btn-primary" onclick="exportSummaryPDF()" style="flex:1">📄 PDF</button>
+      <button class="btn-success" onclick="exportSummaryXLS()" style="flex:1">📊 Excel</button>
+      <button class="btn-primary" onclick="openPrintSelector()" style="flex:1">🖨️ Imprimir/PDF</button>
       <button class="btn-secondary" onclick="closeModal('modal-summary')">Cerrar</button>
     </div>
   </div>
@@ -1173,7 +838,7 @@ tr:hover td{background:var(--surface2)}
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title" id="modal-period-title">Nuevo cierre</div>
-    <div class="inline-edit"><label>Nombre</label><input type="text" class="form-input" id="p-name" placeholder="Ej: Junio 2025, Quincena 1…" __gchrome_uniqueid="29"></div>
+    <div class="inline-edit"><label>Nombre</label><input type="text" class="form-input" id="p-name" placeholder="Ej: Junio 2025, Quincena 1…"></div>
     <div class="inline-edit"><label>Fecha apertura</label><input type="date" class="form-input" id="p-start"></div>
     <div class="inline-edit"><label>Fecha cierre (opcional)</label><input type="date" class="form-input" id="p-end"></div>
     <div style="display:flex;gap:8px;margin-top:6px">
@@ -1184,30 +849,30 @@ tr:hover td{background:var(--surface2)}
 </div>
 
 <!-- MODAL: Edit Expense -->
-<div class="modal-overlay open" id="modal-edit">
+<div class="modal-overlay" id="modal-edit">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">✏️ Editar gasto</div>
-    <div class="inline-edit"><label>Categoría</label><select class="form-select" id="e-cat" __gchrome_uniqueid="30"><option value="restaurante">🍽️ Restaurante / Ocio</option><option value="alimentacion">🛒 Alimentación</option><option value="servicios">💡 Servicios</option><option value="transporte">🚗 Transporte</option><option value="viajes">✈️ Viajes</option><option value="hogar">🏠 Hogar / Hipoteca</option><option value="suscripciones">📱 Suscripciones</option><option value="otros">📦 Otros</option></select></div>
+    <div class="inline-edit"><label>Categoría</label><select class="form-select" id="e-cat"></select></div>
     <div style="display:flex;gap:8px;margin-bottom:11px">
-      <div style="flex:1"><div class="fx-label">Importe original</div><input type="number" class="form-input" id="e-amount" step="0.01" inputmode="decimal" oninput="recalcEUR()" __gchrome_uniqueid="31"></div>
-      <div style="min-width:130px"><div class="fx-label">Moneda</div><select class="currency-select" id="e-currency" onchange="recalcEUR()" style="font-size:12px;padding:11px 10px" __gchrome_uniqueid="32"><option value="EUR">EUR — Euro</option><option value="USD">USD — Dólar estadounidense</option><option value="GBP">GBP — Libra esterlina</option><option value="CHF">CHF — Franco suizo</option><option value="JPY">JPY — Yen japonés</option><option value="CNY">CNY — Yuan chino</option><option value="MXN">MXN — Peso mexicano</option><option value="ARS">ARS — Peso argentino</option><option value="CLP">CLP — Peso chileno</option><option value="COP">COP — Peso colombiano</option><option value="PEN">PEN — Sol peruano</option><option value="BRL">BRL — Real brasileño</option><option value="CAD">CAD — Dólar canadiense</option><option value="AUD">AUD — Dólar australiano</option><option value="NZD">NZD — Dólar neozelandés</option><option value="SEK">SEK — Corona sueca</option><option value="NOK">NOK — Corona noruega</option><option value="DKK">DKK — Corona danesa</option><option value="PLN">PLN — Esloti polaco</option><option value="CZK">CZK — Corona checa</option><option value="HUF">HUF — Forinto húngaro</option><option value="RON">RON — Leu rumano</option><option value="TRY">TRY — Lira turca</option><option value="RUB">RUB — Rublo ruso</option><option value="INR">INR — Rupia india</option><option value="IDR">IDR — Rupia indonesia</option><option value="THB">THB — Baht tailandés</option><option value="VND">VND — Dong vietnamita</option><option value="PHP">PHP — Peso filipino</option><option value="MYR">MYR — Ringgit malayo</option><option value="SGD">SGD — Dólar de Singapur</option><option value="HKD">HKD — Dólar de Hong Kong</option><option value="TWD">TWD — Dólar taiwánés</option><option value="KRW">KRW — Won surcoreano</option><option value="SAR">SAR — Riyal saudí</option><option value="AED">AED — Dírham de EAU</option><option value="QAR">QAR — Riyal catarí</option><option value="KWD">KWD — Dinar kuwaití</option><option value="EGP">EGP — Libra egipcia</option><option value="MAD">MAD — Dírham marroquí</option><option value="ZAR">ZAR — Rand sudafricano</option><option value="NGN">NGN — Naira nigeriana</option><option value="KES">KES — Chelín keniano</option><option value="ILS">ILS — Séquel israelí</option><option value="PKR">PKR — Rupia pakistaní</option><option value="BDT">BDT — Taka bangladeshés</option><option value="CUP">CUP — Peso cubano</option><option value="UYU">UYU — Peso uruguayo</option><option value="PYG">PYG — Guaraní paraguayo</option><option value="BOB">BOB — Boliviano</option><option value="GTQ">GTQ — Quetzal guatemalteco</option><option value="CRC">CRC — Colón costarricense</option><option value="DOP">DOP — Peso dominicano</option><option value="GEL">GEL — Lari georgiano</option><option value="KZT">KZT — Tenge kazajo</option><option value="ISK">ISK — Corona islandesa</option><option value="BAM">BAM — Marco de Bosnia</option><option value="RSD">RSD — Dinar serbio</option><option value="UAH">UAH — Grivna ucraniana</option><option value="AMD">AMD — Dram armenio</option><option value="AZN">AZN — Manat azerbaiyano</option><option value="MNT">MNT — Tugrik mongol</option></select></div>
+      <div style="flex:1"><div class="fx-label">Importe original</div><input type="number" class="form-input" id="e-amount" step="0.01" inputmode="decimal" oninput="recalcEUR()"></div>
+      <div style="min-width:130px"><div class="fx-label">Moneda</div><select class="currency-select" id="e-currency" onchange="recalcEUR()" style="font-size:12px;padding:11px 10px"></select></div>
     </div>
     <div id="e-fx-row" style="display:none;margin-bottom:11px">
       <div class="fx-label">Tipo de cambio (1 divisa = ? EUR)</div>
       <div style="display:flex;gap:8px;align-items:center">
-        <input type="number" class="form-input" id="e-rate" step="0.0001" placeholder="0.0000" inputmode="decimal" oninput="recalcEUR()" style="flex:1" __gchrome_uniqueid="33">
+        <input type="number" class="form-input" id="e-rate" step="0.0001" placeholder="0.0000" inputmode="decimal" oninput="recalcEUR()" style="flex:1">
         <div class="fx-badge" id="e-eur-equiv">= — €</div>
       </div>
       <div style="font-size:10px;color:var(--text3);margin-top:4px">Puedes corregir el tipo de cambio más adelante</div>
     </div>
     <div class="inline-edit"><label>Fecha</label><input type="date" class="form-input" id="e-date"></div>
-    <div class="inline-edit"><label>Concepto</label><input type="text" class="form-input" id="e-concept" __gchrome_uniqueid="34"></div>
-    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period" __gchrome_uniqueid="35"><option value="">Sin cierre</option><option value="1774901475303">Marzo 30 🔓</option></select></div>
-    <div class="inline-edit"><label>Observaciones</label><textarea class="form-textarea" id="e-obs" __gchrome_uniqueid="36"></textarea></div>
+    <div class="inline-edit"><label>Concepto</label><input type="text" class="form-input" id="e-concept"></div>
+    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period"></select></div>
+    <div class="inline-edit"><label>Observaciones</label><textarea class="form-textarea" id="e-obs"></textarea></div>
     <div class="inline-edit">
       <label>¿Quién paga?</label>
-      <select class="form-select" id="e-payer" __gchrome_uniqueid="37">
+      <select class="form-select" id="e-payer">
         <option value="a">👤 Blas</option>
         <option value="b">👤 Corinna</option>
         <option value="both">👥 Ambos</option>
@@ -1216,11 +881,11 @@ tr:hover td{background:var(--surface2)}
     <div style="display:flex;gap:10px;margin-bottom:10px">
       <div class="toggle-wrap" style="flex:1;border-bottom:none;padding:8px 12px;background:var(--surface2);border-radius:12px;margin:0">
         <div><div class="toggle-label">No cuenta</div><div class="toggle-sub">Excluir del total</div></div>
-        <button class="toggle on" id="e-excluded" onclick="this.classList.toggle('on')" aria-label="Excluir"></button>
+        <button class="toggle" id="e-excluded" onclick="toggleExcluded('e')" aria-label="Excluir"></button>
       </div>
       <div class="toggle-wrap" style="flex:1;border-bottom:none;padding:8px 12px;background:var(--surface2);border-radius:12px;margin:0">
         <div><div class="toggle-label">Prestado</div><div class="toggle-sub">Pagas tú por otro</div></div>
-        <button class="toggle" id="e-loaned" onclick="this.classList.toggle('on')" aria-label="Prestado"></button>
+        <button class="toggle" id="e-loaned" onclick="toggleLoaned('e')" aria-label="Prestado"></button>
       </div>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:10px">
@@ -1231,7 +896,7 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
-<div class="toast success" id="toast">✅ Gasto guardado</div>
+<div class="toast" id="toast"></div>
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
@@ -1380,7 +1045,22 @@ let editingPeriodId = null;
 let activePeriodId = null;
 let selectedCardId = null;
 let numpadRaw = '';
+let numpadNegative = false;
 let selectedPayer = 'a'; // default payer (Corinna)
+
+// Mutual exclusion: excluded ↔ loaned
+function toggleExcluded(prefix) {
+  const excl = document.getElementById(prefix+'-excluded');
+  const loan = document.getElementById(prefix+'-loaned');
+  excl.classList.toggle('on');
+  if (excl.classList.contains('on')) loan.classList.remove('on');
+}
+function toggleLoaned(prefix) {
+  const excl = document.getElementById(prefix+'-excluded');
+  const loan = document.getElementById(prefix+'-loaned');
+  loan.classList.toggle('on');
+  if (loan.classList.contains('on')) excl.classList.remove('on');
+}
 
 function selectPayer(p) {
   selectedPayer = p;
@@ -1650,7 +1330,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = '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';
+const EMBEDDED = '%%ENCRYPTED_DATA%%';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
@@ -1905,28 +1585,41 @@ function focusNumpad() {
   document.getElementById('numpad-display').classList.add('active');
 }
 function numpadKey(k) {
+  if (k === 'sign') {
+    numpadNegative = !numpadNegative;
+    const btn = document.getElementById('numpad-sign');
+    const disp = document.getElementById('numpad-display');
+    btn.classList.toggle('negative', numpadNegative);
+    disp.classList.toggle('negative', numpadNegative);
+    if (navigator.vibrate) navigator.vibrate(8);
+    refreshNumpadDisplay(); return;
+  }
   if (k === 'del') {
     numpadRaw = numpadRaw.slice(0, -1);
   } else if (k === ',' || k === '.') {
-    if (!numpadRaw.includes('.')) { numpadRaw = (numpadRaw||'0') + '.'; }
+    if (!numpadRaw.includes('.')) numpadRaw = (numpadRaw || '0') + '.';
   } else {
     if (numpadRaw.includes('.') && numpadRaw.split('.')[1]?.length >= 2) return;
     if (numpadRaw === '0') numpadRaw = k;
     else numpadRaw += k;
   }
-  const el = document.getElementById('numpad-shown');
-  if (!numpadRaw) { el.textContent = '0,00'; el.classList.add('placeholder'); }
-  else {
-    const hasD=numpadRaw.includes('.');
-    const dec=hasD?numpadRaw.split('.')[1]:'';
-    const intP=parseInt(numpadRaw.split('.')[0]||'0').toLocaleString('es-ES');
-    el.textContent=intP+(hasD?','+dec:'');
-    el.classList.remove('placeholder');
-  }
-  // Haptic on iOS
+  refreshNumpadDisplay();
   if (navigator.vibrate) navigator.vibrate(8);
 }
-function getNumpadValue() { return parseFloat(numpadRaw) || 0; }
+
+function refreshNumpadDisplay() {
+  const el = document.getElementById('numpad-shown');
+  if (!numpadRaw) {
+    el.textContent = '0,00'; el.classList.add('placeholder');
+  } else {
+    const hasD = numpadRaw.includes('.');
+    const dec = hasD ? numpadRaw.split('.')[1] : '';
+    const intP = parseInt(numpadRaw.split('.')[0]||'0').toLocaleString('es-ES');
+    el.textContent = (numpadNegative ? '−' : '') + intP + (hasD ? ',' + dec : '');
+    el.classList.remove('placeholder');
+  }
+}
+function getNumpadValue() { const v = parseFloat(numpadRaw) || 0; return numpadNegative ? -v : v; }
 function resetNumpad() {
   numpadRaw = '';
   const el = document.getElementById('numpad-shown');
@@ -2051,6 +1744,12 @@ async function saveExpense() {
   document.getElementById('f-currency').value='EUR'; updateCurrencyDisplay();
   document.getElementById('f-excluded').classList.remove('on');
   document.getElementById('f-loaned').classList.remove('on');
+  numpadNegative = false;
+  document.getElementById('numpad-sign')?.classList.remove('negative');
+  document.getElementById('numpad-display')?.classList.remove('negative');
+  numpadNegative=false;
+  document.getElementById('numpad-sign')?.classList.remove('negative');
+  document.getElementById('numpad-display')?.classList.remove('negative');
   selectedPayer='a'; selectPayer('a');
   document.getElementById('f-concept').value = '';
   document.getElementById('f-obs').value = '';
@@ -2149,7 +1848,7 @@ function renderExpenseList() {
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:10px;flex-shrink:0">
           <div style="text-align:right">
-            <div class="expense-amount">${formatMoney(e.amountEUR??e.amount)}</div>
+            <div class="expense-amount" style="${(e.amountEUR??e.amount)<0?'color:var(--accent3)':''}">${formatMoney(e.amountEUR??e.amount)}</div>
             ${(e.currency&&e.currency!=='EUR')?`<div style="font-size:10px;font-family:var(--mono);color:var(--text2);margin-top:2px">${e.currency} ${e.amount.toFixed(2)}${e.rate?' ×'+e.rate:`<span class='fx-pending' onclick="event.stopPropagation();openEditExpense('${e.id}')" title='Toca para añadir tipo de cambio'> ⚠️ sin cambio</span>`}</div>`:''}
           </div>
           <div class="card-actions">
@@ -2505,11 +2204,18 @@ function renderBalanceView(bal, pNames) {
     </div>`;
   }
 
-  html += `<div class="settlement-box${s.who==='b'?'':' owes'}">
-    <div class="settlement-label">💰 Liquidación final</div>
-    <div class="settlement-text">${s.text}</div>
-    ${s.amount>0.01?`<div class="settlement-amount">${formatMoney(s.amount)}</div>`:''}
-    ${bal.loansAtoB>0||bal.loansBtoA>0?`<div style="font-size:11px;color:var(--text2);margin-top:8px">Incluye ${formatMoney(Math.abs(bal.loansAtoB-bal.loansBtoA))} neto en préstamos</div>`:''}
+  const _cls2 = s.amount<0.01?'even':s.who==='b'?'b-owes':'a-owes';
+  html += `<div class="settlement-card ${_cls2}">
+    <div class="settlement-card-label">💰 Liquidación final</div>
+    ${s.amount>0.01?`
+      <div class="settlement-card-names">
+        <span class="settlement-card-who-${s.who}">${s.who==='a'?pNames.a:pNames.b}</span>
+        <span class="settlement-card-arrow">→</span>
+        <span class="settlement-card-who-${s.who==='a'?'b':'a'}">${s.who==='a'?pNames.b:pNames.a}</span>
+      </div>
+      <div class="settlement-card-amount">${formatMoney(s.amount)}</div>
+    `:`<div class="settlement-card-amount" style="color:var(--accent3)">✅ A mano</div>`}
+    ${(bal.loansAtoB>0||bal.loansBtoA>0)?`<div class="settlement-card-note">Incluye préstamos netos: ${formatMoney(Math.abs(bal.loansAtoB-bal.loansBtoA))}</div>`:''}
   </div>`;
 
   // Step-by-step breakdown
@@ -2735,7 +2441,56 @@ function openPeriodSummary(id) {
   openModal('modal-summary');
 }
 
-function exportSummaryExcel() {
+function exportSummaryXLS() {
+  if (!summaryPeriodId) return;
+  const p = state.periods.find(x=>x.id===summaryPeriodId); if(!p) return;
+  const pNames = state.payerNames||{a:'Blas',b:'Corinna'};
+  const pExps = state.expenses.filter(e=>e.periodId===summaryPeriodId);
+  const bal = calcBalance(pExps, pNames);
+  const sett = settlementText(bal.net, pNames);
+  const cMap={}; CATEGORIES.forEach(c=>cMap[c.id]=c.label);
+  if (typeof XLSX === 'undefined') { showToast('Cargando libreria...', ''); setTimeout(exportSummaryXLS,800); return; }
+  const wb = XLSX.utils.book_new();
+  const sumRows = [
+    ['RESUMEN: '+p.name],
+    ['Periodo', formatDate(p.start)+' > '+(p.end?formatDate(p.end):'en curso')],
+    [],['TOTALES'],
+    ['Total activo (EUR)', bal.totalShared],
+    ['Excluidos', pExps.filter(e=>e.excluded).reduce((s,e)=>s+(e.amountEUR??e.amount),0)],
+    ['Prestamos', pExps.filter(e=>e.loaned).reduce((s,e)=>s+(e.amountEUR??e.amount),0)],
+    [],['POR PERSONA'],
+    [pNames.a+' aporto', bal.paidA_shared],[pNames.b+' aporto', bal.paidB_shared],
+    ['Cada uno deberia pagar', bal.half],
+    ...(bal.loansAtoB>0?[[pNames.a+' presto a '+pNames.b, bal.loansAtoB]]:[]),
+    ...(bal.loansBtoA>0?[[pNames.b+' presto a '+pNames.a, bal.loansBtoA]]:[]),
+    [],['LIQUIDACION'],
+    [sett.amount>0.01?(sett.who==='b'?pNames.b:pNames.a)+' debe a '+(sett.who==='b'?pNames.a:pNames.b):'A mano', sett.amount>0.01?sett.amount:0],
+  ];
+  const ws1=XLSX.utils.aoa_to_sheet(sumRows); ws1['!cols']=[{wch:36},{wch:18}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Resumen');
+  const hdrs=['Fecha','Importe EUR','Concepto','Categoria','Quien paga','Tipo','Moneda','Imp orig','T.cambio','Obs'];
+  const actTotal=pExps.filter(e=>!e.excluded&&!e.loaned).reduce((s,e)=>s+(e.amountEUR??e.amount),0);
+  const expRows=pExps.sort((a,b)=>a.date.localeCompare(b.date)).map(e=>[
+    formatDate(e.date),e.amountEUR??e.amount,e.concept,cMap[e.cat]||e.cat,
+    e.payer==='a'?pNames.a:e.payer==='b'?pNames.b:'Ambos',
+    e.excluded?'Excluido':e.loaned?'Prestado':'Normal',
+    e.currency||'EUR',e.amount,e.rate||1,e.obs||''
+  ]);
+  expRows.push(['TOTAL ACTIVO',actTotal,'','','','','','','','']);
+  const ws2=XLSX.utils.aoa_to_sheet([hdrs,...expRows]);
+  ws2['!cols']=[{wch:12},{wch:14},{wch:30},{wch:20},{wch:12},{wch:12},{wch:8},{wch:12},{wch:10},{wch:25}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Gastos');
+  const byCat={}; CATEGORIES.forEach(c=>byCat[c.id]=0);
+  pExps.filter(e=>!e.excluded&&!e.loaned).forEach(e=>{byCat[e.cat]=(byCat[e.cat]||0)+(e.amountEUR??e.amount);});
+  const catR=[['Categoria','Importe EUR','% total'],...CATEGORIES.filter(c=>byCat[c.id]>0).sort((a,b)=>byCat[b.id]-byCat[a.id]).map(c=>[c.label,byCat[c.id],actTotal>0?+(byCat[c.id]/actTotal*100).toFixed(1):0]),['TOTAL',actTotal,100]];
+  const ws3=XLSX.utils.aoa_to_sheet(catR); ws3['!cols']=[{wch:22},{wch:14},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, ws3, 'Por categoria');
+  XLSX.writeFile(wb, 'resumen_'+p.name.replace(/ /g,'_')+'.xlsx');
+  showToast('Descargado .xlsx','success');
+}
+function exportSummaryExcel() { exportSummaryXLS(); }
+
+function exportSummaryExcel_LEGACY() {
   if(!summaryPeriodId) return;
   const p=state.periods.find(x=>x.id===summaryPeriodId); if(!p) return;
   const pNames=state.payerNames||{a:'Blas',b:'Corinna'};
@@ -2773,10 +2528,27 @@ function exportSummaryExcel() {
   ];
   const csv=BOM+rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(';')).join('\r\n');
   downloadText(csv,'resumen_'+p.name.replace(/ /g,'_')+'.csv','text/csv;charset=utf-8');
-  showToast('📥 Excel exportado','success');
+  showToast('Exportado','success');
+} // end legacy
+
+function selectPrintOpt(el, val) {
+  document.querySelectorAll('.print-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
 }
 
-function exportSummaryPDF() {
+function openPrintSelector() {
+  openModal('modal-print-select');
+}
+
+function doPrint() {
+  const opt = document.querySelector('input[name=print-opt]:checked')?.value || 'summary';
+  closeModal('modal-print-select');
+  exportSummaryPDF(opt);
+}
+
+function exportSummaryPDF(printOpt) {
+  // OVERRIDE — original signature kept for compatibility
+  if (printOpt === undefined) printOpt = 'summary';
   if(!summaryPeriodId) return;
   const p=state.periods.find(x=>x.id===summaryPeriodId); if(!p) return;
   const el=document.getElementById('summary-modal-content');
@@ -2812,10 +2584,26 @@ function exportSummaryPDF() {
     '@media print{body{padding:16px}}'
   ].join('\n');
 
+  // Build expense table for full print
+  let fullExtra = '';
+  if (printOpt === 'full') {
+    const pExps2 = state.expenses.filter(e=>e.periodId===summaryPeriodId).sort((a,b)=>a.date.localeCompare(b.date));
+    const cMap2 = {}; CATEGORIES.forEach(c=>cMap2[c.id]=c.label);
+    const pNames2 = state.payerNames||{a:'Blas',b:'Corinna'};
+    const rows2 = pExps2.map(e=>`<tr>
+      <td>${formatDate(e.date)}</td>
+      <td>${e.concept}${e.obs?'<br><small style="color:#888;font-style:italic">'+e.obs+'</small>':''}</td>
+      <td>${cMap2[e.cat]||e.cat}</td>
+      <td>${e.payer==='a'?pNames2.a:e.payer==='b'?pNames2.b:'Ambos'}</td>
+      <td style="text-align:right;font-family:monospace;font-weight:600;color:${(e.amountEUR??e.amount)<0?'#22c55e':(e.excluded||e.loaned)?'#888':'inherit'}">${(e.amountEUR??e.amount)<0?'+ ':e.excluded?'(excl) ':e.loaned?'(prest) ':''}${Math.abs(e.amountEUR??e.amount).toFixed(2)} €</td>
+    </tr>`).join('');
+    fullExtra = '<h2 style="margin-top:24px;font-size:16px;border-top:2px solid #e0e0ec;padding-top:16px">Detalle de gastos</h2>'+
+      '<table><thead><tr><th>Fecha</th><th>Concepto</th><th>Categoría</th><th>Quién</th><th>Importe</th></tr></thead><tbody>'+rows2+'</tbody></table>';
+  }
   win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Resumen '+p.name+'</title><style>'+pdfCSS+'</style></head><body>'+
     '<h1>\uD83D\uDCCA '+p.name+'</h1>'+
     '<div class="sub">'+formatDate(p.start)+' \u2192 '+(p.end?formatDate(p.end):'en curso')+' \u00B7 Generado '+new Date().toLocaleDateString('es-ES')+'</div>'+
-    el.innerHTML+
+    el.innerHTML+fullExtra+
     '</body></html>');
   win.document.close();
   setTimeout(()=>win.print(), 600);
@@ -3100,6 +2888,5 @@ function showToast(msg,type='') {
 }
 function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 </script>
-
-
-</body></html>
+</body>
+</html>
