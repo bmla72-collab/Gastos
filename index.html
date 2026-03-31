@@ -494,7 +494,19 @@ tr:hover td{background:var(--surface2)}
 
     <!-- ══ TAB 0: INICIO / NUEVO GASTO ══ -->
     <div class="tab-pane active" id="pane0">
-      <div id="today-summary"></div>
+      <div id="today-summary">
+    <div class="today-bar" style="flex-direction:column;align-items:stretch;gap:4px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div class="today-label">Hoy</div><div class="today-count">1 gasto</div></div>
+        <div class="today-val">12,00 €</div>
+      </div>
+      <div class="today-items">
+        <div class="today-item">
+          <span>🍽️ Hhh</span>
+          <span class="today-item-amt">12,00 €</span>
+        </div>
+      </div>
+    </div></div>
       <div id="active-period-banner"><div class="period-indicator">📅 Cierre activo: <strong>Marzo 30</strong> · desde 30/03/2026</div></div>
 
       <div class="form-section">
@@ -502,7 +514,7 @@ tr:hover td{background:var(--surface2)}
         <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()" __gchrome_uniqueid="7"><option value="EUR">EUR — Euro</option><option value="USD">USD — Dólar estadounidense</option><option value="GBP">GBP — Libra esterlina</option><option value="CHF">CHF — Franco suizo</option><option value="JPY">JPY — Yen japonés</option><option value="CNY">CNY — Yuan chino</option><option value="MXN">MXN — Peso mexicano</option><option value="ARS">ARS — Peso argentino</option><option value="CLP">CLP — Peso chileno</option><option value="COP">COP — Peso colombiano</option><option value="PEN">PEN — Sol peruano</option><option value="BRL">BRL — Real brasileño</option><option value="CAD">CAD — Dólar canadiense</option><option value="AUD">AUD — Dólar australiano</option><option value="NZD">NZD — Dólar neozelandés</option><option value="SEK">SEK — Corona sueca</option><option value="NOK">NOK — Corona noruega</option><option value="DKK">DKK — Corona danesa</option><option value="PLN">PLN — Esloti polaco</option><option value="CZK">CZK — Corona checa</option><option value="HUF">HUF — Forinto húngaro</option><option value="RON">RON — Leu rumano</option><option value="TRY">TRY — Lira turca</option><option value="RUB">RUB — Rublo ruso</option><option value="INR">INR — Rupia india</option><option value="IDR">IDR — Rupia indonesia</option><option value="THB">THB — Baht tailandés</option><option value="VND">VND — Dong vietnamita</option><option value="PHP">PHP — Peso filipino</option><option value="MYR">MYR — Ringgit malayo</option><option value="SGD">SGD — Dólar de Singapur</option><option value="HKD">HKD — Dólar de Hong Kong</option><option value="TWD">TWD — Dólar taiwánés</option><option value="KRW">KRW — Won surcoreano</option><option value="SAR">SAR — Riyal saudí</option><option value="AED">AED — Dírham de EAU</option><option value="QAR">QAR — Riyal catarí</option><option value="KWD">KWD — Dinar kuwaití</option><option value="EGP">EGP — Libra egipcia</option><option value="MAD">MAD — Dírham marroquí</option><option value="ZAR">ZAR — Rand sudafricano</option><option value="NGN">NGN — Naira nigeriana</option><option value="KES">KES — Chelín keniano</option><option value="ILS">ILS — Séquel israelí</option><option value="PKR">PKR — Rupia pakistaní</option><option value="BDT">BDT — Taka bangladeshés</option><option value="CUP">CUP — Peso cubano</option><option value="UYU">UYU — Peso uruguayo</option><option value="PYG">PYG — Guaraní paraguayo</option><option value="BOB">BOB — Boliviano</option><option value="GTQ">GTQ — Quetzal guatemalteco</option><option value="CRC">CRC — Colón costarricense</option><option value="DOP">DOP — Peso dominicano</option><option value="GEL">GEL — Lari georgiano</option><option value="KZT">KZT — Tenge kazajo</option><option value="ISK">ISK — Corona islandesa</option><option value="BAM">BAM — Marco de Bosnia</option><option value="RSD">RSD — Dinar serbio</option><option value="UAH">UAH — Grivna ucraniana</option><option value="AMD">AMD — Dram armenio</option><option value="AZN">AZN — Manat azerbaiyano</option><option value="MNT">MNT — Tugrik mongol</option></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
         <div class="numpad-display" id="numpad-display" onclick="focusNumpad()">
           <span class="numpad-prefix" id="numpad-prefix">€</span>
-          <span class="numpad-value" id="numpad-shown">12</span>
+          <span class="numpad-value" id="numpad-shown">14</span>
         </div>
         <div class="numpad-grid" id="numpad-grid">
           <button class="numpad-btn" onclick="numpadKey('7')">7</button>
@@ -585,7 +597,7 @@ tr:hover td{background:var(--surface2)}
             <div class="toggle-label">No cuenta</div>
             <div class="toggle-sub">Excluir del total</div>
           </div>
-          <button class="toggle" id="f-excluded" onclick="this.classList.toggle('on')" aria-label="Excluir del total"></button>
+          <button class="toggle on" id="f-excluded" onclick="this.classList.toggle('on')" aria-label="Excluir del total"></button>
         </div>
         <div class="toggle-wrap" style="flex:1;border-bottom:none;padding:8px 12px;background:var(--surface2);border-radius:12px;margin:0">
           <div>
@@ -644,10 +656,39 @@ tr:hover td{background:var(--surface2)}
         </div>
         <div id="list-totals-bar">
     <div class="totals-bar">
-      <div><div class="totals-bar-label">Total activo</div><div class="totals-bar-val">20,32 €</div></div>
-      <div style="text-align:right"><div class="totals-bar-count">1 gastos</div></div>
+      <div><div class="totals-bar-label">Total activo</div><div class="totals-bar-val">32,32 €</div></div>
+      <div style="text-align:right"><div class="totals-bar-count">2 gastos</div></div>
     </div></div>
-        <div id="expense-list"><div class="expense-card " id="card-1774901507681afkeefdl8rm" onclick="selectCard('1774901507681afkeefdl8rm')">
+        <div id="expense-list"><div class="expense-card " id="card-1774926250705jiszltfqrz7" onclick="selectCard('1774926250705jiszltfqrz7')">
+      <div class="card-row">
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <div class="expense-concept">Hhh</div>
+            <div class="expense-period-tag">Marzo 30</div>
+          </div>
+          <div class="expense-meta">31/03/2026</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
+            <div class="expense-cat" style="color:#f97316">🍽️ Restaurante / Ocio</div>
+          </div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
+            
+            
+              
+          </div>
+          
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-left:10px;flex-shrink:0">
+          <div style="text-align:right">
+            <div class="expense-amount">12,00 €</div>
+            
+          </div>
+          <div class="card-actions">
+            <button class="card-btn edit" onclick="event.stopPropagation();openEditExpense('1774926250705jiszltfqrz7')" title="Editar">✏️</button>
+            <button class="card-btn del" id="del-btn-1774926250705jiszltfqrz7" onclick="event.stopPropagation();confirmDelete('1774926250705jiszltfqrz7',this)" title="Eliminar">🗑</button>
+          </div>
+        </div>
+      </div>
+    </div><div class="expense-card " id="card-1774901507681afkeefdl8rm" onclick="selectCard('1774901507681afkeefdl8rm')">
       <div class="card-row">
         <div style="flex:1;min-width:0">
           <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
@@ -726,9 +767,9 @@ tr:hover td{background:var(--surface2)}
       </div>
       <div id="analysis-content">
     <div class="stat-grid">
-      <div class="stat-card"><div class="stat-label">Total activo</div><div class="stat-value" style="font-size:17px">20,32 €</div><div class="stat-sub">1 gastos</div></div>
-      <div class="stat-card"><div class="stat-label">Promedio gasto</div><div class="stat-value" style="font-size:17px">20,32 €</div><div class="stat-sub">por entrada</div></div>
-      <div class="stat-card"><div class="stat-label">Blas</div><div class="stat-value" style="font-size:15px">20,32 €</div><div class="stat-sub">1 gastos</div></div>
+      <div class="stat-card"><div class="stat-label">Total activo</div><div class="stat-value" style="font-size:17px">32,32 €</div><div class="stat-sub">2 gastos</div></div>
+      <div class="stat-card"><div class="stat-label">Promedio gasto</div><div class="stat-value" style="font-size:17px">16,16 €</div><div class="stat-sub">por entrada</div></div>
+      <div class="stat-card"><div class="stat-label">Blas</div><div class="stat-value" style="font-size:15px">32,32 €</div><div class="stat-sub">2 gastos</div></div>
       <div class="stat-card"><div class="stat-label">Corinna</div><div class="stat-value" style="font-size:15px">0,00 €</div><div class="stat-sub">0 gastos</div></div>
     </div>
 
@@ -738,8 +779,11 @@ tr:hover td{background:var(--surface2)}
     <div class="section-header"><div class="section-title">Por categoría</div></div>
     <div style="margin-bottom:16px">
       <div class="bar-row">
-          <div class="bar-header"><span>🛒 Alimentación</span><span style="font-family:var(--mono);font-size:11px">20,32 € · 100%</span></div>
+          <div class="bar-header"><span>🛒 Alimentación</span><span style="font-family:var(--mono);font-size:11px">20,32 € · 63%</span></div>
           <div class="bar-bg"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#22c55e,#22c55e88)"></div></div>
+        </div><div class="bar-row">
+          <div class="bar-header"><span>🍽️ Restaurante / Ocio</span><span style="font-family:var(--mono);font-size:11px">12,00 € · 37%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:59%;background:linear-gradient(90deg,#f97316,#f9731688)"></div></div>
         </div>
     </div>
 
@@ -755,13 +799,19 @@ tr:hover td{background:var(--surface2)}
       </tr></thead>
       <tbody>
         <tr>
+          <td style="white-space:nowrap;color:var(--text2);font-size:12px">31/03/2026</td>
+          <td><div style="font-size:13px;font-weight:500">Hhh</div></td>
+          <td><span class="td-cat" style="color:#f97316">🍽️ Restaurante / Ocio</span></td>
+          <td class="td-amt">12,00 €</td>
+          <td style="font-size:11px;color:var(--text2)">Marzo 30</td>
+        </tr><tr>
           <td style="white-space:nowrap;color:var(--text2);font-size:12px">30/03/2026</td>
           <td><div style="font-size:13px;font-weight:500">Consum</div></td>
           <td><span class="td-cat" style="color:#22c55e">🛒 Alimentación</span></td>
           <td class="td-amt">20,32 €</td>
           <td style="font-size:11px;color:var(--text2)">Marzo 30</td>
         </tr>
-        <tr class="td-total"><td colspan="3" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">TOTAL · 1 gastos</td><td class="td-amt">20,32 €</td><td></td></tr>
+        <tr class="td-total"><td colspan="3" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase">TOTAL · 2 gastos</td><td class="td-amt">32,32 €</td><td></td></tr>
       </tbody>
     </table>
   </div>
@@ -835,7 +885,7 @@ tr:hover td{background:var(--surface2)}
       <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar" __gchrome_uniqueid="25">
       <button class="btn-primary" onclick="changePassword()" style="margin-top:8px">🔑 Cambiar</button>
     </div>
-    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">2 gastos · 1 cierres</div></div></div>
+    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">3 gastos · 1 cierres</div></div></div>
     <div style="margin-top:10px;margin-bottom:4px">
       <button class="btn-danger" onclick="openDeleteModal()" style="width:100%">🗑 Gestionar borrado de datos…</button>
     </div>
@@ -1019,7 +1069,7 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
-<div class="toast success" id="toast">🗑 Cierre eliminado</div>
+<div class="toast success" id="toast">✅ Gasto guardado</div>
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
@@ -1438,7 +1488,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = 'zmL4qWVLBePLNXMqVEFgtcBYoZs2V5ypR5UuUd4WM/8LpuGmf2i8oRa6N9oo6hbfBOOVWPIujfvDX4JqDRNiN5Y5CwumxK3zE2e2cqlkxAZxQzIWiEnH6j5k0YinWKZY2ZnNYAY4WoTN8iNiwSleWL8b17+YFaZ8lmVTRmBoj00gToat9dFdbZZ6xDAP/4hBEhSEhBdRaGIM6knbAhbqaKyzHfJKnnhGCPHHuaALed1ZEIDS2eW64CzWbGdSw2Ej5bSys8z1wq9UFFibIzrzvd491D+b4kd5zlxNkyFcsoFVE+kk3M7jZdOLZkA2KfBndReaHn6JvnhkMyKxtgeStmsbcU0IzX513mFm3SiXOO7OVBIfB3OvM/TvFjlLeGtQa6MMkRv4h+SYMbcP3wy01L34Cej3k3BqlyIT7ZyKvsVmLtWrO5KEVjKTwExJ/5jWl5SpOjbnL9OYWznMKBiZHwrM2eivQB1bJYDFDl8khidWQRukGQhNP0+ZuYF1rVuxWEPko7+9oPDiBimzbFQjWAg8RKRVdKGsYp7B2vLzXJvtgOzzv+Mqw6FVCdMivepnF8f809trtQSRUS0TzXBNCXYQrCa+591/zR9xr5i9xpB2Oj57G8x/kCOev6woq0CxlVdLraj1sFqjLjs2k7wIORW0fGCYFLS0Xeq6InS1C1qcmBwzn6ZMlovrlXqyAjJkUKbeO3+WiCnnAggfmJfLVOuSyLLPIG0jav915NB//6nnAGKz5bvjJPJAbwtwki9K8xOcJSUjp/cK9bM2i/YcLgAjiraX3SDTISlxxJoBWfCJNNqTu+xk3/aYk51Y5/hFws2DQRHb61xLSqbIccF3Ohf+3Qhd8mrG5XA3WwkmSafVGAFRn3dfKgVyVmtgtRpZ6oYEs2fdu7pgvyWg9xAe9w+SLBlXEPN6eyUgabzJyvywhsiHI3hol7pdGNPLiobfcsUjL4jy1bhe2vDkC93YGQqX4d+GM7i9/Fa9mJcrF+8sW3L6qacFR4p6dZpaZBXCEShHdb1LG6DDPqcrVA/muHBPZ3kCszClD7pfcTJ9nZs1fXGbIDah+IJeEhUfUUnZ2xrxwfgoIafCnTmgeC4tUo41O41r/9uV22/3/mxMbDLhRy9G9XYcWSyp0vwkyx/O8ljg0rgU1FJhJ0X8I4hm8kj/driVrUCKALbsoG+EZ42HZRyWhu1aXh3ZV5s+A8COWfpo2HBFFPOeD4emBynNm5xjs8JilDmGaF22KXyqtYWph6XhzPHjmELSDzg5sBhXDF7u9eG7NqMrOuEXqq7adc235CfLiyjlZHmOUlEm820SB48+9w5Onys0dgydKCPkZIx7fJUSeBLHxY15Zk6OnPXcaEUQZ1QFYHBPb3TV3LU5+Eu5Ehr6ScQtHKh+pZJ4mOdjKMVIDZf4kA==';
+const EMBEDDED = 'b+3Dn2n7AjDFVumllJp4u4l2ueQUYxXcw6msZiiVAaDma5l2H4aXesQlkuInRFHbhpdJuIE66HQi4vYpmbVxFKtcF5PiHoWd/mLaqRrezYNNrsKwO9nsPHlVM/jOclVemkc12U+gDJngk8bVSBMjlkNk0GhAPf2ZCdXNCjA2TNuKlGF9KTDh11X+gXvrqztFuhX8ggymca6VbGLT6gzkeNxHx91eJb5Eda2v/zZCDgYAUcxLgv81l0juvgG6j4ghK6V462RDmR6hSncnRZMwVweP8jPRVof1zOGVptS+xWdeFVEBj0LfJHerydQDZ9NFQUkavv86yPFc+lbJJLyJQJ9iUFMzL/QoGOyibeYd54zTVLMxIuRwStOxQ+mWrM2FvrYRcRkObjhdwIfnYMVA0FwQgb85LGUdOmWUtGxl6BgJhlAYRzem1r+7rEuXyslgsR1tQuwWOiNwO2cG935rc0dn1CfpOfdJHnt08JOCz7vWJctOTAvdAxe/5IBsceBxSnJ/T17n0ZL6RygGFdeqWKoKe20e6u8JuaiscStV79LwqoBQM6002zVMLpNUKU06CO3q3Pc00RTGgqnR4UtqhNFoBQeWha4K0P+Ecqg0gTWhq115gBoNnnJvam9Yni2YmkhZrxZKPDOaQsvUXuB56lYOw+A6DO0ZtDkAV2ogTPH/YSww6LyhlD6WQ70QHJTb0u5NAQT5zH1gyYaSLXibFo8115PoZdPYnU+vZT+oOYwkzZVCt7+hOAFZ0a09NDcWYI5NOC2ezL3Ji7x2RGjIQmianDYQUiPVRI3s/3TnqsgGNtPq5eW/R4fVOrUGOdBekV3/19xEq7QTvysI/22D4mp9hfyzGGixYdh2n6yUOyVLt2fPDlv9tNDon4x5cj8KTodcAdgrUN2I/nVb1guQY/Do9n6y+amwVTyTAS5hX35DoGdBsWV3Y8SNWkZ8pcrijB5m25YuIbngg15w+Auo/ZzXWh5FIbcjQ0Gr6nKI+x0mA2cZjovW8SlQiJy7q9CH8WiwnknADvEDJDB47KfW/F6py9bzVsbdEnx5vp8jAYCrjdjlFH3q2VElu6Raz23h2DE5516vxY5cLk34kYafG5y4TjBx5kLZ2ev/XX1in+xjjPyZ2A3d8QGgxYmqInt7hHATmc+1FzO0fGEKP14JYI1tpa4VD3nvMZucL7RxGy0L3N+FAI1VoqisTBAF7uMxYXEJ/Bmw67ASSJhvWE6UTCTLlQlluewiYRnyk3yZ3oqAPZD+pj2oScmZ55ck2RHyhHiFua5jPGWpqt13YLKHpHnoSn8/U4VLlvWFk1r/KI33PMldmgPPIl5TDuuaqaxfWtrUozYeeo1AR9Rsj0OIFYqm3Z8pSACx6f+2IOTtlQaAkpYFyCrMMXft8w+ecr2ZDh1iTjlk691GhUpY41nRAdDhFdQCgeSwvEjZWkCqS53DWZuN+71nMhfyfZCqJp3fH7YQoJ1XXdMRlDxtl96jd3MQ/kBcOdPoO7L4TY2pm4k9DJOmsFkB5itT4dY6If6tsIdSuWcc6qEdeanESNBXUxkuAnaKxmhwowHpn7gn5Gz8ewZWQsdIzxnLqg9+u2mIbQsL/S6Gcfkdz1byOmTmYQZLbDjj+MxAR1AtNzhWjrTQfP/hAfyG0f19ABT+OuwAHNwoLNC1R2qxOFFVH64TEEkhxAWk3G3q6MvXp1YoBMvKYrDmJ/Xs0mUmwDU23kcdN7hXGX+JfB9Y++CP885OfTNFOeFMO4kTRe/5puE=';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
