@@ -531,26 +531,26 @@ tr:hover td{background:var(--surface2)}
 
   <!-- Tab bar -->
   <div class="tab-bar">
-    <button class="tab-btn" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
+    <button class="tab-btn active" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
     <button class="tab-btn" onclick="switchTab(1)" id="tab1"><span>📋</span>Gastos</button>
     <button class="tab-btn" onclick="switchTab(2)" id="tab2"><span>📊</span>Análisis</button>
-    <button class="tab-btn active" onclick="switchTab(3)" id="tab3"><span>📅</span>Cierres</button>
+    <button class="tab-btn" onclick="switchTab(3)" id="tab3"><span>📅</span>Cierres</button>
     <button class="tab-btn" onclick="switchTab(4)" id="tab4"><span>📝</span>Historial</button>
   </div>
 
   <div class="tab-content">
 
     <!-- ══ TAB 0: INICIO / NUEVO GASTO ══ -->
-    <div class="tab-pane" id="pane0">
+    <div class="tab-pane active" id="pane0">
       <div id="today-summary"></div>
-      <div id="active-period-banner"><div class="period-indicator" style="color:var(--text2);border-color:var(--border)">⚠️ Sin cierre abierto — gastos sin asignar</div></div>
+      <div id="active-period-banner"><div class="period-indicator">📅 Cierre activo: <strong>Abril 2016</strong> · desde 30/03/2026</div></div>
 
       <div class="form-section">
         <label class="form-label">Importe *</label>
         <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()"><option value="EUR">EUR — Euro</option><option value="USD">USD — Dólar estadounidense</option><option value="GBP">GBP — Libra esterlina</option><option value="CHF">CHF — Franco suizo</option><option value="JPY">JPY — Yen japonés</option><option value="CNY">CNY — Yuan chino</option><option value="MXN">MXN — Peso mexicano</option><option value="ARS">ARS — Peso argentino</option><option value="CLP">CLP — Peso chileno</option><option value="COP">COP — Peso colombiano</option><option value="PEN">PEN — Sol peruano</option><option value="BRL">BRL — Real brasileño</option><option value="CAD">CAD — Dólar canadiense</option><option value="AUD">AUD — Dólar australiano</option><option value="NZD">NZD — Dólar neozelandés</option><option value="SEK">SEK — Corona sueca</option><option value="NOK">NOK — Corona noruega</option><option value="DKK">DKK — Corona danesa</option><option value="PLN">PLN — Esloti polaco</option><option value="CZK">CZK — Corona checa</option><option value="HUF">HUF — Forinto húngaro</option><option value="RON">RON — Leu rumano</option><option value="TRY">TRY — Lira turca</option><option value="RUB">RUB — Rublo ruso</option><option value="INR">INR — Rupia india</option><option value="IDR">IDR — Rupia indonesia</option><option value="THB">THB — Baht tailandés</option><option value="VND">VND — Dong vietnamita</option><option value="PHP">PHP — Peso filipino</option><option value="MYR">MYR — Ringgit malayo</option><option value="SGD">SGD — Dólar de Singapur</option><option value="HKD">HKD — Dólar de Hong Kong</option><option value="TWD">TWD — Dólar taiwánés</option><option value="KRW">KRW — Won surcoreano</option><option value="SAR">SAR — Riyal saudí</option><option value="AED">AED — Dírham de EAU</option><option value="QAR">QAR — Riyal catarí</option><option value="KWD">KWD — Dinar kuwaití</option><option value="EGP">EGP — Libra egipcia</option><option value="MAD">MAD — Dírham marroquí</option><option value="ZAR">ZAR — Rand sudafricano</option><option value="NGN">NGN — Naira nigeriana</option><option value="KES">KES — Chelín keniano</option><option value="ILS">ILS — Séquel israelí</option><option value="PKR">PKR — Rupia pakistaní</option><option value="BDT">BDT — Taka bangladeshés</option><option value="CUP">CUP — Peso cubano</option><option value="UYU">UYU — Peso uruguayo</option><option value="PYG">PYG — Guaraní paraguayo</option><option value="BOB">BOB — Boliviano</option><option value="GTQ">GTQ — Quetzal guatemalteco</option><option value="CRC">CRC — Colón costarricense</option><option value="DOP">DOP — Peso dominicano</option><option value="GEL">GEL — Lari georgiano</option><option value="KZT">KZT — Tenge kazajo</option><option value="ISK">ISK — Corona islandesa</option><option value="BAM">BAM — Marco de Bosnia</option><option value="RSD">RSD — Dinar serbio</option><option value="UAH">UAH — Grivna ucraniana</option><option value="AMD">AMD — Dram armenio</option><option value="AZN">AZN — Manat azerbaiyano</option><option value="MNT">MNT — Tugrik mongol</option></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
         <div class="numpad-display active" id="numpad-display" onclick="focusNumpad()">
           <span class="numpad-prefix" id="numpad-prefix">€</span>
-          <span class="numpad-value" id="numpad-shown">2016</span>
+          <span class="numpad-value" id="numpad-shown">60</span>
         </div>
         <div class="numpad-grid" id="numpad-grid">
           <button class="numpad-btn" onclick="numpadKey('7')">7</button>
@@ -580,7 +580,7 @@ tr:hover td{background:var(--surface2)}
     </div><div class="cat-chip" id="chip-servicios" onclick="selectCat('servicios')">
       <span class="cat-chip-icon">💡</span>
       <span class="cat-chip-label">Servicios</span>
-    </div><div class="cat-chip" id="chip-transporte" onclick="selectCat('transporte')">
+    </div><div class="cat-chip selected" id="chip-transporte" onclick="selectCat('transporte')">
       <span class="cat-chip-icon">🚗</span>
       <span class="cat-chip-label">Transporte</span>
     </div><div class="cat-chip" id="chip-viajes" onclick="selectCat('viajes')">
@@ -605,7 +605,7 @@ tr:hover td{background:var(--surface2)}
         </div>
         <div>
           <label class="form-label">Cierre</label>
-          <select class="form-select" id="f-period"><option value="">Sin cierre</option></select>
+          <select class="form-select" id="f-period"><option value="">Sin cierre</option><option value="1775207948446">Abril 2016 🔓</option></select>
         </div>
       </div>
 
@@ -662,7 +662,7 @@ tr:hover td{background:var(--surface2)}
               <select class="filter-select" id="fl-cat" onchange="applyListFilters()"><option value="">Todas</option><option value="restaurante">🍽️ Restaurante / Ocio</option><option value="alimentacion">🛒 Alimentación</option><option value="servicios">💡 Servicios</option><option value="transporte">🚗 Transporte</option><option value="viajes">✈️ Viajes</option><option value="hogar">🏠 Hogar / Hipoteca</option><option value="suscripciones">📱 Suscripciones</option><option value="otros">📦 Otros</option></select>
             </div>
             <div class="filter-group"><label class="filter-label">Cierre</label>
-              <select class="filter-select" id="fl-period" onchange="applyListFilters()"><option value="">Todos</option></select>
+              <select class="filter-select" id="fl-period" onchange="applyListFilters()"><option value="">Todos</option><option value="1775207948446">Abril 2016 🔓</option></select>
             </div>
           </div>
           <div class="filter-row" style="margin-top:8px">
@@ -716,7 +716,7 @@ tr:hover td{background:var(--surface2)}
           <div class="filter-group"><label class="filter-label">Desde</label><input type="date" class="filter-input" id="an-from" onchange="renderAnalysis()"></div>
           <div class="filter-group"><label class="filter-label">Hasta</label><input type="date" class="filter-input" id="an-to" onchange="renderAnalysis()"></div>
           <div class="filter-group"><label class="filter-label">Cierre</label>
-            <select class="filter-select" id="an-period" onchange="renderAnalysis()"><option value="">Todos</option></select>
+            <select class="filter-select" id="an-period" onchange="renderAnalysis()"><option value="">Todos</option><option value="1775207948446">Abril 2016 🔓</option></select>
           </div>
         </div>
       </div>
@@ -778,12 +778,31 @@ tr:hover td{background:var(--surface2)}
     </div>
 
     <!-- ══ TAB 3: CIERRES ══ -->
-    <div class="tab-pane active" id="pane3">
+    <div class="tab-pane" id="pane3">
       <div style="display:flex;gap:8px;margin-bottom:14px">
         <button class="btn-primary" onclick="openNewPeriod()" style="flex:1"><span>➕</span> Nuevo cierre</button>
       </div>
 
-      <div id="periods-list"><div class="empty-state"><div class="empty-icon">📅</div><div class="empty-text">Crea tu primer cierre</div></div></div>
+      <div id="periods-list"><div class="period-card period-active">
+      <span class="period-badge open">🔓 Abierto</span>
+      <div class="period-title">Abril 2016</div>
+      <div class="period-dates">Desde 30/03/2026 (en curso)</div>
+      <div class="period-totals">
+        <div class="period-total-item"><div class="period-total-label">Total</div><div class="period-total-val">0,00 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Blas</div><div class="period-total-val" style="color:var(--accent)">0,00 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Corinna</div><div class="period-total-val" style="color:#ec4899">0,00 €</div></div>
+      </div>
+      <div style="margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:10px;font-size:12px;font-weight:600;color:var(--text2)">
+        💰 ✅ A mano
+      </div>
+      <div class="period-actions">
+        <button class="btn-secondary" onclick="openEditPeriod('1775207948446')">✏️ Editar</button>
+        <button class="btn-warn" onclick="closePeriod('1775207948446')">🔒 Cerrar</button>
+        <button class="btn-primary" onclick="openPeriodSummary('1775207948446')" style="flex:1;min-height:36px;font-size:13px">📊 Resumen</button>
+        <button class="btn-secondary" onclick="filterByPeriod('1775207948446')">🔍 Gastos</button>
+        <button class="btn-danger" onclick="deletePeriod('1775207948446')">🗑</button>
+      </div>
+    </div></div>
     </div>
 
     <!-- ══ TAB 4: HISTORIAL / AUDIT LOG ══ -->
@@ -825,7 +844,7 @@ tr:hover td{background:var(--surface2)}
       <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar">
       <button class="btn-primary" onclick="changePassword()" style="margin-top:8px">🔑 Cambiar</button>
     </div>
-    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">0 gastos · 1 cierres</div></div></div>
+    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">1 gastos · 1 cierres</div></div></div>
     <div style="margin-top:10px;margin-bottom:4px">
       <button class="btn-danger" onclick="openDeleteModal()" style="width:100%">🗑 Gestionar borrado de datos…</button>
     </div>
@@ -943,7 +962,7 @@ tr:hover td{background:var(--surface2)}
 </div>
 
 <!-- MODAL: Period -->
-<div class="modal-overlay open" id="modal-period">
+<div class="modal-overlay" id="modal-period">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title" id="modal-period-title">Nuevo cierre</div>
@@ -977,7 +996,7 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="inline-edit"><label>Fecha</label><input type="date" class="form-input" id="e-date"></div>
     <div class="inline-edit"><label>Concepto</label><input type="text" class="form-input" id="e-concept"></div>
-    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period"><option value="">Sin cierre</option></select></div>
+    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period"><option value="">Sin cierre</option><option value="1775207948446">Abril 2016 🔓</option></select></div>
     <div class="inline-edit"><label>Observaciones</label><textarea class="form-textarea" id="e-obs"></textarea></div>
     <div class="inline-edit">
       <label>¿Quién paga?</label>
@@ -1005,7 +1024,7 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
-<div class="toast error" id="toast">Escribe un nombre</div>
+<div class="toast success" id="toast">✅ Cierre guardado</div>
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
@@ -1439,7 +1458,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = 'Ldb0SsGVgJd/vpWmHx3YFBUH3Lm9OsMKGmM9PqB69IySgIDVA498HG/8Ws0dZpQMYQx71k30CBkX7IDOWoeKQskbstIh1eHDuKba1Svs0DCOevmN7Ns15Vz5qDm+UMXJ89jmF/3MDtu+e4GfUNcv93IVG6kjy/1w0bXYulAZO1ZUjQo5NpHGYcq5oJBIlQhGxTHBowHwJRw9ODfDByizbKtv7SFdc45tURvjTP8kVLm5A2M2SZfeVtS6tkhfL7xb5sk4AdPjs+QPBcbqNZ5Y10qgvmFzPevxraXvvkp0mCkZwgyllZs5ig5u0cdwxtkAmp4sGufkjPyU7hdulxYEza2V5gUbVXfoZgKTVwki1z+ndHfWiQHUWKsBvwvaKeHoi7GUO1bth/BfJXh+IDoy7GNzDeSHIMYJewUqlk5IrzMnrwrqVOemOx3wmsjxse8W5exCOrAf7HyJ8FIiQhog54lLm2vrMAkVMOwyiJn9334pG8DeNjEbfuXxGTySaHAY3coLI2aTXkHC1B5JwXrsk67dtVHDKhW0v0DvEdThqo1BS3J1MkCm39Mmp46LDE2NyG6OJ5a2nlyVlqIljUzY98ydOhz/LegKBTZtueK8lTRvkbKoDM/sfYrRWntGIz/Ll4Wdy+SgeQxuJ4WiOJFwPumB/uqFwGuAnqXv1e+srzDpcyegsqpnaa/gJOHyu066PPUNMCk=';
+const EMBEDDED = '1JmolJu81jWgGF32xmIOk6Xj4U8zHk6uuP1dJs0uAMz3PaLTLkqnQrOLKM99mEQhP7HUx1HGbXTzOzoyXAJ3I6BKuRBxsalVnDNWlmDPHmd32NzDN/IH++bvwVxBk4A+RnPCcMOWQOZkJBsf+eCk7LE1jf9mET3vZ22aviJFIpyYRgNdux+We3E+6Gwa5sQi/BcChFEJMjS0959ZbImGJhXiP389K5cRVXq7iuoXvbYjMhYzWueGAuyLvPhg9pjSlSDkF7j3AKkTztRt4gY6Ctx5m+x31wu5ct9zrVZt94lC359y7HRiX16w11rjAM/L0Qv43AUaSl7xIrQjNA3lrDjgEOxqOsuFIUVF28nv3a1Elf0PXq08rSaaUmPMyq/LXwV6M6Me2JfazJYeuZoJWqB46xOBvsqX51oX1Md2QYr27U69Mlock5bxvAcOfrLG0XOzlqkxMMvxkNhIEdp1v067Z9ZrMvA5FxHbXFwwTNo2Fjt4B41CrPBd75jxRPZwIhXfFn4qgVKdB4tXnippvju5kKlAxB/HmXEVTLyYKbD/53VTncSZ9pAzy3GVitBtQ7n2CBvurnCJdA0lr2OpwMCz7lc4ihpbNIAHaSCCcnuhxA6Cnd4gUXMlWOJK+CXlbhB1bTTv2L9UvhfBOOdSQfVHcm48bE/1sXC8IPz+wzEQM1wH5Z6Gsw3Qe4uWyB0xlMt9w/Ere+6SjW+WPZ1IiGt+iYl0UFeqh7GTxqxmqbSmLhT9jXKdbeieDMmjVoSXezVIaKecvdyBVvnWGKFv8G+c/62nRCro29LWtVHdhLHgyc9fqPnQpHxTmYckStQIs47iPFiawErPxJ/IvtwLnWwKn9T/CyeXV2axVty/XEJdQIYUtCDzO8JiQzeAJDN49cp9qET2tLIsslU7oCretEbXQbkJFzllxjgwR4jGg+Uj3YXYHPVX3BeYvf98xNgc3f2JG01qTiT1aCS3333wROU/mS5L4SROSgq32xidwnYcuPRjyg1Q37RcJiVnYar/Nz/jJ3+F0mkaPAEqegsvUUihDqYgeSchEC+FadHaNV4b9ISp';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
