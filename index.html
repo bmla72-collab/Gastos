@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es" __gchrome_remoteframetoken="75a5c08504b99c04d911e2315bc01aa2"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Gastos Hogar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#0f0f13;--surface:#1a1a22;--surface2:#22222e;--border:#2e2e3e;
@@ -497,7 +496,7 @@ tr:hover td{background:var(--surface2)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
-<body>
+<body data-__gcrweb-innertext-processed="5FC33387E3BB02E0BBBF980193B8C4E2">
 <!-- ══ LOGIN SCREEN ══ -->
 <div id="screen-login" style="display:none">
   <div class="auth-logo">🏠</div>
@@ -505,59 +504,54 @@ tr:hover td{background:var(--surface2)}
   <div class="auth-sub" id="login-sub">Tu gestor familiar privado</div>
   <div class="auth-card">
     <label class="auth-label" for="login-pwd">Contraseña</label>
-    <input type="password" class="auth-input" id="login-pwd" placeholder="••••••••"
-      autocomplete="current-password" enterkeyhint="go">
+    <input type="password" class="auth-input" id="login-pwd" placeholder="••••••••" autocomplete="current-password" enterkeyhint="go" __gchrome_uniqueid="1">
     <button class="auth-btn" id="login-btn" onclick="doLogin()">Abrir 🔐</button>
     <div class="auth-err" id="login-err"></div>
   </div>
 </div>
 
 <!-- ══ SETUP WIZARD ══ -->
-<div id="screen-setup" style="display:none">
+<div id="screen-setup" style="display: flex;">
   <div class="auth-logo">🏠</div>
   <div class="auth-title">Primera configuración</div>
   <div class="auth-sub">Solo tienes que hacer esto una vez</div>
   <div class="auth-card">
     <div class="setup-steps">
-      <div class="setup-step active" id="step-dot-0"></div>
-      <div class="setup-step" id="step-dot-1"></div>
-      <div class="setup-step" id="step-dot-2"></div>
+      <div class="setup-step done" id="step-dot-0"></div>
+      <div class="setup-step done" id="step-dot-1"></div>
+      <div class="setup-step active" id="step-dot-2"></div>
     </div>
 
     <!-- Step 0: Password -->
-    <div id="setup-step-0">
+    <div id="setup-step-0" style="display: none;">
       <div class="setup-step-title">🔑 Elige una contraseña</div>
       <div class="setup-step-sub">Cifrará todos tus datos con AES-256. Sin ella, nadie puede ver nada.</div>
       <label class="auth-label">Contraseña</label>
-      <input type="password" class="auth-input" id="setup-pwd1" placeholder="Mínimo 8 caracteres"
-        autocomplete="new-password" oninput="updateStrength()">
-      <div class="pwd-strength" id="pwd-strength-wrap" style="display:none">
-        <div class="pwd-strength-bar"><div class="pwd-strength-fill" id="pwd-strength-bar"></div></div>
-        <div class="pwd-strength-text" id="pwd-strength-text"></div>
+      <input type="password" class="auth-input" id="setup-pwd1" placeholder="Mínimo 8 caracteres" autocomplete="new-password" oninput="updateStrength()" __gchrome_uniqueid="2">
+      <div class="pwd-strength" id="pwd-strength-wrap" style="display: block;">
+        <div class="pwd-strength-bar"><div class="pwd-strength-fill" id="pwd-strength-bar" style="width: 80%; background: rgb(102, 204, 153);"></div></div>
+        <div class="pwd-strength-text" id="pwd-strength-text" style="color: rgb(102, 204, 153);">Buena</div>
       </div>
       <label class="auth-label">Confirmar contraseña</label>
-      <input type="password" class="auth-input" id="setup-pwd2" placeholder="Repite la contraseña"
-        autocomplete="new-password" enterkeyhint="next">
+      <input type="password" class="auth-input" id="setup-pwd2" placeholder="Repite la contraseña" autocomplete="new-password" enterkeyhint="next" __gchrome_uniqueid="3">
       <button class="auth-btn" onclick="setupStep0Next()">Siguiente →</button>
       <div class="auth-err" id="setup-err-0"></div>
     </div>
 
     <!-- Step 1: GitHub -->
-    <div id="setup-step-1" style="display:none">
+    <div id="setup-step-1" style="display: none;">
       <div class="setup-step-title">☁️ Conectar con GitHub</div>
       <div class="setup-step-sub">El archivo se guardará cifrado en tu repositorio. Sin GitHub, los datos viven solo en este dispositivo.</div>
       <label class="auth-label">Token GitHub (ghp_...)</label>
-      <input type="password" class="auth-input" id="setup-gh-token" placeholder="ghp_xxxxxxxxxxxx"
-        autocomplete="off">
+      <input type="password" class="auth-input" id="setup-gh-token" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" __gchrome_uniqueid="4">
       <label class="auth-label">Repositorio (usuario/repo)</label>
-      <input type="text" class="auth-input" id="setup-gh-repo" placeholder="tuusuario/gastos-hogar"
-        autocomplete="off" enterkeyhint="done">
+      <input type="text" class="auth-input" id="setup-gh-repo" placeholder="tuusuario/gastos-hogar" autocomplete="off" enterkeyhint="done" __gchrome_uniqueid="5">
       <label class="auth-label">Archivo</label>
-      <input type="text" class="auth-input" id="setup-gh-file" placeholder="index.html" value="index.html">
+      <input type="text" class="auth-input" id="setup-gh-file" placeholder="index.html" value="index.html" __gchrome_uniqueid="6">
       <div style="display:flex;gap:8px;margin-top:4px">
         <button class="auth-btn" onclick="setupStep1Test()" style="flex:1">🔌 Validar token</button>
       </div>
-      <div class="gh-test-result" id="gh-test-result"></div>
+      <div class="gh-test-result ok" id="gh-test-result" style="display: block;">✅ Conectado — bmla72-collab/Gastos (público)</div>
       <div style="display:flex;gap:8px;margin-top:10px">
         <button class="auth-btn secondary" onclick="setupGoBack(0)" style="flex:0 0 auto;padding:15px 20px">←</button>
         <button class="auth-btn" id="setup-step1-next" onclick="setupStep1Next()" style="flex:1">Siguiente →</button>
@@ -569,14 +563,14 @@ tr:hover td{background:var(--surface2)}
     </div>
 
     <!-- Step 2: Done -->
-    <div id="setup-step-2" style="display:none">
+    <div id="setup-step-2" style="display: block;">
       <div style="text-align:center;padding:10px 0">
         <div style="font-size:48px;margin-bottom:12px">✅</div>
         <div class="setup-step-title">¡Todo listo!</div>
-        <div class="setup-step-sub" id="setup-done-sub">Tus datos están cifrados y guardados.</div>
-        <div id="setup-done-spinner" style="display:none;margin:12px 0;color:var(--text2);font-size:13px">⏳ Subiendo a GitHub…</div>
+        <div class="setup-step-sub" id="setup-done-sub">Tus datos están cifrados con AES-256 y se subirán a GitHub automáticamente.</div>
+        <div id="setup-done-spinner" style="display: block; margin: 12px 0px; color: var(--text2); font-size: 13px;">⏳ Subiendo a GitHub…</div>
       </div>
-      <button class="auth-btn" id="setup-done-btn" onclick="setupFinish()">Entrar a la app 🚀</button>
+      <button class="auth-btn" id="setup-done-btn" onclick="setupFinish()" disabled="">⏳ Preparando…</button>
       <div class="auth-err" id="setup-err-2"></div>
     </div>
   </div>
@@ -615,10 +609,10 @@ tr:hover td{background:var(--surface2)}
 
       <div class="form-section">
         <label class="form-label">Importe *</label>
-        <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()"></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
+        <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()" __gchrome_uniqueid="7"></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
         <div class="numpad-display" id="numpad-display" onclick="focusNumpad()">
           <span class="numpad-prefix" id="numpad-prefix">€</span>
-          <span class="numpad-value placeholder" id="numpad-shown">0,00</span>
+          <span class="numpad-value" id="numpad-shown">7.274.772</span>
         </div>
         <div class="numpad-grid" id="numpad-grid">
           <button class="numpad-btn" onclick="numpadKey('7')">7</button>
@@ -649,18 +643,18 @@ tr:hover td{background:var(--surface2)}
         </div>
         <div>
           <label class="form-label">Cierre</label>
-          <select class="form-select" id="f-period"></select>
+          <select class="form-select" id="f-period" __gchrome_uniqueid="8"></select>
         </div>
       </div>
 
       <div class="form-section">
         <label class="form-label">Concepto *</label>
-        <input type="text" class="form-input" id="f-concept" placeholder="Ej: Mercadona semanal" autocomplete="off" autocorrect="off">
+        <input type="text" class="form-input" id="f-concept" placeholder="Ej: Mercadona semanal" autocomplete="off" autocorrect="off" __gchrome_uniqueid="9">
       </div>
 
       <div class="form-section">
         <label class="form-label">Observaciones</label>
-        <textarea class="form-textarea" id="f-obs" placeholder="Notas opcionales…"></textarea>
+        <textarea class="form-textarea" id="f-obs" placeholder="Notas opcionales…" __gchrome_uniqueid="10"></textarea>
       </div>
 
       <div class="form-section">
@@ -703,20 +697,20 @@ tr:hover td{background:var(--surface2)}
           </div>
           <div class="filter-row" style="margin-top:8px">
             <div class="filter-group"><label class="filter-label">Categoría</label>
-              <select class="filter-select" id="fl-cat" onchange="applyListFilters()"><option value="">Todas</option></select>
+              <select class="filter-select" id="fl-cat" onchange="applyListFilters()" __gchrome_uniqueid="11"><option value="">Todas</option></select>
             </div>
             <div class="filter-group"><label class="filter-label">Cierre</label>
-              <select class="filter-select" id="fl-period" onchange="applyListFilters()"><option value="">Todos</option></select>
+              <select class="filter-select" id="fl-period" onchange="applyListFilters()" __gchrome_uniqueid="12"><option value="">Todos</option></select>
             </div>
           </div>
           <div class="filter-row" style="margin-top:8px">
-            <div class="filter-group"><label class="filter-label">Mín €</label><input type="number" class="filter-input" id="fl-min" placeholder="0" inputmode="decimal" onchange="applyListFilters()"></div>
-            <div class="filter-group"><label class="filter-label">Máx €</label><input type="number" class="filter-input" id="fl-max" placeholder="∞" inputmode="decimal" onchange="applyListFilters()"></div>
-            <div class="filter-group" style="min-width:100px"><label class="filter-label">Buscar</label><input type="text" class="filter-input" id="fl-search" placeholder="concepto…" oninput="applyListFilters()"></div>
+            <div class="filter-group"><label class="filter-label">Mín €</label><input type="number" class="filter-input" id="fl-min" placeholder="0" inputmode="decimal" onchange="applyListFilters()" __gchrome_uniqueid="13"></div>
+            <div class="filter-group"><label class="filter-label">Máx €</label><input type="number" class="filter-input" id="fl-max" placeholder="∞" inputmode="decimal" onchange="applyListFilters()" __gchrome_uniqueid="14"></div>
+            <div class="filter-group" style="min-width:100px"><label class="filter-label">Buscar</label><input type="text" class="filter-input" id="fl-search" placeholder="concepto…" oninput="applyListFilters()" __gchrome_uniqueid="15"></div>
           </div>
           <div class="filter-row" style="margin-top:8px">
             <div class="filter-group"><label class="filter-label">Quién paga</label>
-              <select class="filter-select" id="fl-payer" onchange="applyListFilters()">
+              <select class="filter-select" id="fl-payer" onchange="applyListFilters()" __gchrome_uniqueid="16">
                 <option value="">Todos</option>
                 <option value="a">👤 Blas</option>
                 <option value="b">👤 Corinna</option>
@@ -724,7 +718,7 @@ tr:hover td{background:var(--surface2)}
               </select>
             </div>
             <div class="filter-group"><label class="filter-label">Mostrar</label>
-              <select class="filter-select" id="fl-excl" onchange="applyListFilters()">
+              <select class="filter-select" id="fl-excl" onchange="applyListFilters()" __gchrome_uniqueid="17">
                 <option value="">Todos</option>
                 <option value="included">Solo activos</option>
                 <option value="excluded">Solo excluidos</option>
@@ -756,14 +750,14 @@ tr:hover td{background:var(--surface2)}
           <div class="filter-group"><label class="filter-label">Desde</label><input type="date" class="filter-input" id="an-from" onchange="renderAnalysis()"></div>
           <div class="filter-group"><label class="filter-label">Hasta</label><input type="date" class="filter-input" id="an-to" onchange="renderAnalysis()"></div>
           <div class="filter-group"><label class="filter-label">Cierre</label>
-            <select class="filter-select" id="an-period" onchange="renderAnalysis()"><option value="">Todos</option></select>
+            <select class="filter-select" id="an-period" onchange="renderAnalysis()" __gchrome_uniqueid="18"><option value="">Todos</option></select>
           </div>
         </div>
       </div>
       <div class="filter-panel" style="margin-bottom:10px">
         <div class="filter-row">
           <div class="filter-group"><label class="filter-label">Quién paga</label>
-            <select class="filter-select" id="an-payer" onchange="renderAnalysis()">
+            <select class="filter-select" id="an-payer" onchange="renderAnalysis()" __gchrome_uniqueid="19">
               <option value="">Todos</option>
               <option value="a">👤 Blas</option>
               <option value="b">👤 Corinna</option>
@@ -771,7 +765,7 @@ tr:hover td{background:var(--surface2)}
             </select>
           </div>
           <div class="filter-group"><label class="filter-label">Vista</label>
-            <select class="filter-select" id="an-view" onchange="renderAnalysis()">
+            <select class="filter-select" id="an-view" onchange="renderAnalysis()" __gchrome_uniqueid="20">
               <option value="general">General</option>
               <option value="balance">Balance personas</option>
               <option value="budget">Presupuesto</option>
@@ -780,10 +774,10 @@ tr:hover td{background:var(--surface2)}
         </div>
       </div>
       <div class="export-bar">
-        <button class="btn-success" onclick="exportAnalysisXLS()" style="flex:1">&#128202; Excel</button>
-        <button class="btn-primary" onclick="exportAnalysisPDF()" style="flex:1">&#128424; PDF</button>
-        <button class="btn-secondary" onclick="exportJSON()">&#128228; JSON</button>
-        <button class="btn-secondary" onclick="importJSON()">&#128229; Import</button>
+        <button class="btn-success" onclick="exportAnalysisXLS()" style="flex:1">📊 Excel</button>
+        <button class="btn-primary" onclick="exportAnalysisPDF()" style="flex:1">🖨 PDF</button>
+        <button class="btn-secondary" onclick="exportJSON()">📤 JSON</button>
+        <button class="btn-secondary" onclick="importJSON()">📥 Import</button>
       </div>
       <div id="analysis-content"></div>
     </div>
@@ -827,20 +821,14 @@ tr:hover td{background:var(--surface2)}
       <div class="shop-add-card">
         <div class="shop-row">
           <div class="shop-input-wrap">
-            <input type="text" class="shop-input" id="shop-input"
-              placeholder="¿Qué necesitas?" autocomplete="off" autocorrect="off"
-              spellcheck="false" enterkeyhint="done"
-              oninput="shopAutoComplete(this.value)"
-              onkeydown="shopKeyNav(event)"
-              onfocus="shopAutoComplete(this.value)"
-              onblur="setTimeout(shopHideAC,200)">
+            <input type="text" class="shop-input" id="shop-input" placeholder="¿Qué necesitas?" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done" oninput="shopAutoComplete(this.value)" onkeydown="shopKeyNav(event)" onfocus="shopAutoComplete(this.value)" onblur="setTimeout(shopHideAC,200)" __gchrome_uniqueid="21">
             <div class="shop-autocomplete" id="shop-ac" style="display:none"></div>
           </div>
           <button class="shop-add-btn" onclick="shopAdd()">＋</button>
         </div>
         <div class="shop-selects" style="margin-bottom:8px">
         <div class="shop-selects">
-          <select class="shop-select" id="shop-new-store">
+          <select class="shop-select" id="shop-new-store" __gchrome_uniqueid="22">
             <option value="">Tienda</option>
             <option value="Mercadona">Mercadona</option>
             <option value="Carrefour">Carrefour</option>
@@ -849,9 +837,8 @@ tr:hover td{background:var(--surface2)}
             <option value="Farmacia">Farmacia</option>
             <option value="Otras">Otras</option>
           </select>
-          <input type="number" class="shop-unit-input" id="shop-new-qty"
-            placeholder="Cant." min="0.1" step="0.1" inputmode="decimal" value="">
-          <select class="shop-select" id="shop-new-unit" style="min-width:80px">
+          <input type="number" class="shop-unit-input" id="shop-new-qty" placeholder="Cant." min="0.1" step="0.1" inputmode="decimal" value="" __gchrome_uniqueid="23">
+          <select class="shop-select" id="shop-new-unit" style="min-width:80px" __gchrome_uniqueid="24">
             <option value="ud">ud</option>
             <option value="kg">kg</option>
             <option value="g">g</option>
@@ -866,7 +853,7 @@ tr:hover td{background:var(--surface2)}
           </select>
           <button class="shop-urgent-btn" id="shop-urgent-btn" onclick="shopToggleUrgent()">⚡ Urgente</button>
         </div>
-        <input type="text" class="shop-input" id="shop-new-note" placeholder="Nota: sin lactosa, marca blanca…" autocomplete="off" style="margin-top:8px;font-size:14px;padding:9px 14px">
+        <input type="text" class="shop-input" id="shop-new-note" placeholder="Nota: sin lactosa, marca blanca…" autocomplete="off" style="margin-top:8px;font-size:14px;padding:9px 14px" __gchrome_uniqueid="25">
       </div>
 
       <div class="shop-stores" id="shop-store-filter">
@@ -902,8 +889,8 @@ tr:hover td{background:var(--surface2)}
     <div class="modal-title">🏪 Gestionar tiendas</div>
     <div id="shop-stores-list" style="margin-bottom:14px"></div>
     <div style="display:flex;gap:8px;margin-bottom:14px">
-      <input type="text" class="form-input" id="shop-new-store-name" placeholder="Nombre de la tienda" style="flex:1">
-      <input type="text" class="form-input" id="shop-new-store-emoji" placeholder="🏪" style="width:56px;text-align:center">
+      <input type="text" class="form-input" id="shop-new-store-name" placeholder="Nombre de la tienda" style="flex:1" __gchrome_uniqueid="26">
+      <input type="text" class="form-input" id="shop-new-store-emoji" placeholder="🏪" style="width:56px;text-align:center" __gchrome_uniqueid="27">
       <button class="btn-primary" onclick="shopAddStore()" style="padding:12px 16px;min-height:44px;flex:0">➕</button>
     </div>
     <button class="btn-secondary" onclick="closeModal('modal-shop-stores')" style="width:100%">Cerrar</button>
@@ -921,11 +908,11 @@ tr:hover td{background:var(--surface2)}
     <div class="settings-row"><div><div class="settings-label">GitHub Sync</div><div class="settings-sub">Token personal de GitHub</div></div></div>
     <div style="margin-bottom:14px">
       <label class="form-label" style="margin-top:8px">Token (ghp_...)</label>
-      <input type="password" class="form-input" id="s-gh-token" placeholder="ghp_xxxxxxxx" autocomplete="off">
+      <input type="password" class="form-input" id="s-gh-token" placeholder="ghp_xxxxxxxx" autocomplete="off" __gchrome_uniqueid="28">
       <label class="form-label" style="margin-top:9px">Repo (usuario/repo)</label>
-      <input type="text" class="form-input" id="s-gh-repo" placeholder="tuusuario/gastos-hogar">
+      <input type="text" class="form-input" id="s-gh-repo" placeholder="tuusuario/gastos-hogar" __gchrome_uniqueid="29">
       <label class="form-label" style="margin-top:9px">Archivo</label>
-      <input type="text" class="form-input" id="s-gh-file" placeholder="index.html">
+      <input type="text" class="form-input" id="s-gh-file" placeholder="index.html" __gchrome_uniqueid="30">
     </div>
     <div style="display:flex;gap:8px;margin-bottom:18px">
       <button class="btn-success" onclick="saveGitHubConfig()" style="flex:1">💾 Guardar</button>
@@ -933,8 +920,8 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="settings-row"><div><div class="settings-label">Cambiar contraseña</div></div></div>
     <div style="margin-bottom:14px;margin-top:9px">
-      <input type="password" class="form-input" id="s-newpwd1" placeholder="Nueva contraseña" style="margin-bottom:7px">
-      <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar">
+      <input type="password" class="form-input" id="s-newpwd1" placeholder="Nueva contraseña" style="margin-bottom:7px" __gchrome_uniqueid="31">
+      <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar" __gchrome_uniqueid="32">
       <button class="btn-primary" onclick="changePassword()" style="margin-top:8px">🔑 Cambiar</button>
     </div>
     <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">—</div></div></div>
@@ -943,8 +930,8 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="settings-row"><div><div class="settings-label">Nombres de los pagadores</div><div class="settings-sub">Cómo aparecen en la app</div></div></div>
     <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:18px">
-      <input type="text" class="form-input" id="s-payer-a" placeholder="Blas" style="flex:1">
-      <input type="text" class="form-input" id="s-payer-b" placeholder="Corinna" style="flex:1">
+      <input type="text" class="form-input" id="s-payer-a" placeholder="Blas" style="flex:1" __gchrome_uniqueid="33">
+      <input type="text" class="form-input" id="s-payer-b" placeholder="Corinna" style="flex:1" __gchrome_uniqueid="34">
       <button class="btn-secondary" onclick="savePayerNames()">💾</button>
     </div>
     <div class="settings-row" style="margin-top:8px"><div><div class="settings-label">Presupuesto mensual por categoría</div><div class="settings-sub">En euros — 0 = sin límite</div></div></div>
@@ -965,7 +952,7 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="del-modal-section">
       <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Contraseña de confirmación</div>
-      <input type="password" class="del-pwd-input" id="del-pwd" placeholder="Contraseña de la app" autocomplete="off">
+      <input type="password" class="del-pwd-input" id="del-pwd" placeholder="Contraseña de la app" autocomplete="off" __gchrome_uniqueid="35">
     </div>
     <div class="del-modal-section">
       <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Borrar por cierre</div>
@@ -986,7 +973,7 @@ tr:hover td{background:var(--surface2)}
     <div class="modal-handle"></div>
     <div class="modal-title">🖨️ Selecciona qué imprimir</div>
     <label class="print-option selected" onclick="selectPrintOpt(this,'summary')">
-      <input type="radio" name="print-opt" value="summary" checked>
+      <input type="radio" name="print-opt" value="summary" checked="">
       <div><div class="print-option-label">Solo resumen</div><div class="print-option-sub">Totales, balance y liquidación final</div></div>
     </label>
     <label class="print-option" onclick="selectPrintOpt(this,'full')">
@@ -1019,7 +1006,7 @@ tr:hover td{background:var(--surface2)}
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title" id="modal-period-title">Nuevo cierre</div>
-    <div class="inline-edit"><label>Nombre</label><input type="text" class="form-input" id="p-name" placeholder="Ej: Junio 2025, Quincena 1…"></div>
+    <div class="inline-edit"><label>Nombre</label><input type="text" class="form-input" id="p-name" placeholder="Ej: Junio 2025, Quincena 1…" __gchrome_uniqueid="36"></div>
     <div class="inline-edit"><label>Fecha apertura</label><input type="date" class="form-input" id="p-start"></div>
     <div class="inline-edit"><label>Fecha cierre (opcional)</label><input type="date" class="form-input" id="p-end"></div>
     <div style="display:flex;gap:8px;margin-top:6px">
@@ -1034,26 +1021,26 @@ tr:hover td{background:var(--surface2)}
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">✏️ Editar gasto</div>
-    <div class="inline-edit"><label>Categoría</label><select class="form-select" id="e-cat"></select></div>
+    <div class="inline-edit"><label>Categoría</label><select class="form-select" id="e-cat" __gchrome_uniqueid="37"></select></div>
     <div style="display:flex;gap:8px;margin-bottom:11px">
-      <div style="flex:1"><div class="fx-label">Importe original</div><input type="number" class="form-input" id="e-amount" step="0.01" inputmode="decimal" oninput="recalcEUR()"></div>
-      <div style="min-width:130px"><div class="fx-label">Moneda</div><select class="currency-select" id="e-currency" onchange="recalcEUR()" style="font-size:12px;padding:11px 10px"></select></div>
+      <div style="flex:1"><div class="fx-label">Importe original</div><input type="number" class="form-input" id="e-amount" step="0.01" inputmode="decimal" oninput="recalcEUR()" __gchrome_uniqueid="38"></div>
+      <div style="min-width:130px"><div class="fx-label">Moneda</div><select class="currency-select" id="e-currency" onchange="recalcEUR()" style="font-size:12px;padding:11px 10px" __gchrome_uniqueid="39"></select></div>
     </div>
     <div id="e-fx-row" style="display:none;margin-bottom:11px">
       <div class="fx-label">Tipo de cambio (1 divisa = ? EUR)</div>
       <div style="display:flex;gap:8px;align-items:center">
-        <input type="number" class="form-input" id="e-rate" step="0.0001" placeholder="0.0000" inputmode="decimal" oninput="recalcEUR()" style="flex:1">
+        <input type="number" class="form-input" id="e-rate" step="0.0001" placeholder="0.0000" inputmode="decimal" oninput="recalcEUR()" style="flex:1" __gchrome_uniqueid="40">
         <div class="fx-badge" id="e-eur-equiv">= — €</div>
       </div>
       <div style="font-size:10px;color:var(--text3);margin-top:4px">Puedes corregir el tipo de cambio más adelante</div>
     </div>
     <div class="inline-edit"><label>Fecha</label><input type="date" class="form-input" id="e-date"></div>
-    <div class="inline-edit"><label>Concepto</label><input type="text" class="form-input" id="e-concept"></div>
-    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period"></select></div>
-    <div class="inline-edit"><label>Observaciones</label><textarea class="form-textarea" id="e-obs"></textarea></div>
+    <div class="inline-edit"><label>Concepto</label><input type="text" class="form-input" id="e-concept" __gchrome_uniqueid="41"></div>
+    <div class="inline-edit"><label>Cierre</label><select class="form-select" id="e-period" __gchrome_uniqueid="42"></select></div>
+    <div class="inline-edit"><label>Observaciones</label><textarea class="form-textarea" id="e-obs" __gchrome_uniqueid="43"></textarea></div>
     <div class="inline-edit">
       <label>¿Quién paga?</label>
-      <select class="form-select" id="e-payer">
+      <select class="form-select" id="e-payer" __gchrome_uniqueid="44">
         <option value="a">👤 Blas</option>
         <option value="b">👤 Corinna</option>
         <option value="both">👥 Ambos</option>
@@ -1521,7 +1508,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = '%%ENCRYPTED_DATA%%';
+const EMBEDDED = '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';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
@@ -3819,5 +3806,6 @@ function showToast(msg,type='') {
 }
 function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 </script>
-</body>
-</html>
+
+
+</div></body></html>
