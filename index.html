@@ -520,7 +520,7 @@ tr:hover td{background:var(--surface2)}
   <div class="app-header">
     <div>
       <div class="app-header-title">🏠 Gastos Hogar</div>
-      <div class="gh-status" id="gh-status"><div class="gh-dot connected" id="gh-dot"></div><span id="gh-label">✅ Guardado 11:16</span></div>
+      <div class="gh-status" id="gh-status"><div class="gh-dot connected" id="gh-dot"></div><span id="gh-label">bmla72-collab/Gastos</span></div>
     </div>
     <div class="header-actions">
       <div class="icon-btn" onclick="toggleTheme()">🌙</div>
@@ -550,7 +550,7 @@ tr:hover td{background:var(--surface2)}
         <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()"><option value="EUR">EUR — Euro</option><option value="USD">USD — Dólar estadounidense</option><option value="GBP">GBP — Libra esterlina</option><option value="CHF">CHF — Franco suizo</option><option value="JPY">JPY — Yen japonés</option><option value="CNY">CNY — Yuan chino</option><option value="MXN">MXN — Peso mexicano</option><option value="ARS">ARS — Peso argentino</option><option value="CLP">CLP — Peso chileno</option><option value="COP">COP — Peso colombiano</option><option value="PEN">PEN — Sol peruano</option><option value="BRL">BRL — Real brasileño</option><option value="CAD">CAD — Dólar canadiense</option><option value="AUD">AUD — Dólar australiano</option><option value="NZD">NZD — Dólar neozelandés</option><option value="SEK">SEK — Corona sueca</option><option value="NOK">NOK — Corona noruega</option><option value="DKK">DKK — Corona danesa</option><option value="PLN">PLN — Esloti polaco</option><option value="CZK">CZK — Corona checa</option><option value="HUF">HUF — Forinto húngaro</option><option value="RON">RON — Leu rumano</option><option value="TRY">TRY — Lira turca</option><option value="RUB">RUB — Rublo ruso</option><option value="INR">INR — Rupia india</option><option value="IDR">IDR — Rupia indonesia</option><option value="THB">THB — Baht tailandés</option><option value="VND">VND — Dong vietnamita</option><option value="PHP">PHP — Peso filipino</option><option value="MYR">MYR — Ringgit malayo</option><option value="SGD">SGD — Dólar de Singapur</option><option value="HKD">HKD — Dólar de Hong Kong</option><option value="TWD">TWD — Dólar taiwánés</option><option value="KRW">KRW — Won surcoreano</option><option value="SAR">SAR — Riyal saudí</option><option value="AED">AED — Dírham de EAU</option><option value="QAR">QAR — Riyal catarí</option><option value="KWD">KWD — Dinar kuwaití</option><option value="EGP">EGP — Libra egipcia</option><option value="MAD">MAD — Dírham marroquí</option><option value="ZAR">ZAR — Rand sudafricano</option><option value="NGN">NGN — Naira nigeriana</option><option value="KES">KES — Chelín keniano</option><option value="ILS">ILS — Séquel israelí</option><option value="PKR">PKR — Rupia pakistaní</option><option value="BDT">BDT — Taka bangladeshés</option><option value="CUP">CUP — Peso cubano</option><option value="UYU">UYU — Peso uruguayo</option><option value="PYG">PYG — Guaraní paraguayo</option><option value="BOB">BOB — Boliviano</option><option value="GTQ">GTQ — Quetzal guatemalteco</option><option value="CRC">CRC — Colón costarricense</option><option value="DOP">DOP — Peso dominicano</option><option value="GEL">GEL — Lari georgiano</option><option value="KZT">KZT — Tenge kazajo</option><option value="ISK">ISK — Corona islandesa</option><option value="BAM">BAM — Marco de Bosnia</option><option value="RSD">RSD — Dinar serbio</option><option value="UAH">UAH — Grivna ucraniana</option><option value="AMD">AMD — Dram armenio</option><option value="AZN">AZN — Manat azerbaiyano</option><option value="MNT">MNT — Tugrik mongol</option></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
         <div class="numpad-display" id="numpad-display" onclick="focusNumpad()">
           <span class="numpad-prefix" id="numpad-prefix">€</span>
-          <span class="numpad-value" id="numpad-shown">7.272.747.274</span>
+          <span class="numpad-value" id="numpad-shown">72.727.472.747.274</span>
         </div>
         <div class="numpad-grid" id="numpad-grid">
           <button class="numpad-btn" onclick="numpadKey('7')">7</button>
@@ -883,7 +883,7 @@ tr:hover td{background:var(--surface2)}
 </div>
 
 <!-- MODAL: Delete Protected -->
-<div class="modal-overlay" id="modal-delete">
+<div class="modal-overlay open" id="modal-delete">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title" style="color:var(--accent2)">🗑 Borrar datos</div>
@@ -897,19 +897,7 @@ tr:hover td{background:var(--surface2)}
     </div>
     <div class="del-modal-section">
       <div style="font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Borrar por cierre</div>
-      <div id="del-periods-list"><div class="del-period-item">
-        <div>
-          <div class="del-period-name">Junio 2025</div>
-          <div class="del-period-meta">16 gastos · 3518,39 €</div>
-        </div>
-        <button class="btn-danger" data-pid="p2" onclick="deletePeriodProtected(this.dataset.pid)" style="padding:7px 12px;font-size:12px;min-height:34px">🗑 Borrar</button>
-      </div><div class="del-period-item">
-        <div>
-          <div class="del-period-name">Mayo 2025</div>
-          <div class="del-period-meta">15 gastos · 1811,39 €</div>
-        </div>
-        <button class="btn-danger" data-pid="p1" onclick="deletePeriodProtected(this.dataset.pid)" style="padding:7px 12px;font-size:12px;min-height:34px">🗑 Borrar</button>
-      </div></div>
+      <div id="del-periods-list"><div style="font-size:13px;color:var(--text2)">Sin cierres creados</div></div>
     </div>
     <div class="del-modal-section">
       <div style="font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Zona de peligro</div>
@@ -1017,7 +1005,7 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
-<div class="toast success show" id="toast">🗑 Cierre "Junio 2025" borrado</div>
+<div class="toast error" id="toast">Introduce la contraseña</div>
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
@@ -1451,7 +1439,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = 'Jca/oVm87IeeJxDqGAoqDFJKfGKasG1HociBAfSD4NWY19+27bPHCQIFfJPwZNh/h4i4FPrakpnp7KHXtw0w6M+Bkq69JSHITlme04uBRNEdtCIBGWxEhbZbL6/7jakOBBc+oiPT+8W4r2pK1DHSkEq7aX94jCJF1nOvjQjT+wcb+ZZCbC15xTl4TqcglH0W4vdyBJTTYqSPtni6iG/4l9HskK2x7aeeR3aWwIKdJ7gUTsy6K/cx7DAtjU4yfhJ1XxsV+W5crPQaBejc+l5wDfU9WLomXPWYVCRS0v2J0FQc3Nkf/+G8kUZvGTd/RTJn9D6pwSBsyl0mJxgNVK55Czvl8Yjt9tgedS/UNvbFoodwYLVNM3lddHMoQ9iZzhAFepdYG3iRejbpe9njLTamHgMlAt8A678j9ApoqVzQ7MBau7Uf5w/6SNbJ2aBVFjIpMDYtzZ7knCRDZo/NlW6jA+nHXmMG3SlIWIl/8My2VFKpBuUYja1/mHLY+hLJyroexxO4gs5nn8Ymzz3gwPV4rl9mYpvUde17bl6p3vi79jtNVpkcqIrf647WfiGpaOO4nza/G2zZvr+q0TMq25H8rra47MKrhUe+NUmhQsZnZmrWKRuFkF4uiwE809qTsE+JUVrL6HhLfzj/VW0eRsMlz1F1nI3XB3Csf9J2vHbuk/2Y8CFFlWo9BaAdgWgN3A/a3GPXw8Pu19lCTC3XPcbC+OI4CGZkFW6GNVeIk+o2QLlccy8ccjggSCxyxSdDwbb5sFWjEJtp0P7TrHlfO4GXb24tkGAsw02F+69drDSzfhY842jSylYkt8+iiwE/5S564EP4oaLbK4Hzmie26mxA0jcEhf64ub3BNf5PkY9vxCcYrVwe33o7vdAaqhkIfh5x70WPcbe+ES8aiNEgZ1XvptsJeoynLxHLl1pRPTW847+xz993a37sZLNc32DdntR2U0DurM6cM4lVjH37aQcS755HRQHfLCtEpbRjT9XEGjUbEzrptLIshyq+tGBaJpzDjIvrPn0WJ3qGjO6ZV8JqoRIlDehHmtG+TJNmbMWRkD2JkuWg/cLsQ0Lte0tXaC8FK3oqH+lWfnSj6LAC+vsIbYbahNF2nqZ5X8h8TB+qseDFwNQ6ukjelcp2G6LoMKhW5eQ+wjPTYrXk9lTnvjmhQ1ENc/TJ1D2+ShqA6KqapImHTWYv/anr5hNwSilQz96beuYXmrfhWdfosLEg8d36+ODH83ksHuiVwUY=';
+const EMBEDDED = '3MsIOj3LyVDcbzEHqCXuM8E+a7IZP9Lv/CNtQvPLlQJyKrC5eSj41+YLNukKe41PyTinakqUhwUkGOfNiU23e9y9zgQKT1jimKGpwK9wT8NoB9/g683RqyX430P3axDmvSp364Xrx54JwZu+bj5l2qvSLiVJOONUI5LXzXRx1aNUJOr3CCiA1zoufyNsy5VlMyPKQJMVxwH36ZboVcKPuYLYJxTrRk9t0tkn30RKEdGVgRdhX/3g8dsLcuG/QvteIkU/uthGOTrBTrRCZ3QKHJftVThOxaQiNZQU8bs/ZsEGm9J0zd+NvjfecfSLy8yNe3q1qxFt/TsTs76SQ+twbHGIreu0NcJPiw4ET31Rut0doWjMH/L9di2FH/XVY7T9jZRFfuv4arTNKaB4ohtW78Dtik3Qn7Y4xNoqDou1OCUXTe4a/qBoB8kd5rnE9fasNg+dVXaLfujafHxNAm3YCWrvI8F0ex0qHihFJWhhjM6K6lzO2kBKj8yHjnDPmVGVSIJ0uQ5kC9LbyrhOmn+QG6ypz0Kq';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
