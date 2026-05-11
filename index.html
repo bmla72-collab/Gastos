@@ -3086,12 +3086,8 @@ async function handleImport(ev) {
     const nPer = data.periods?.length || 0;
     const isFullBackup = data.version === 2;
     const msg = isFullBackup
-      ? 'Backup completo (v2): ' + nExp + ' gastos, ' + nPer + ' cierres, lista compra, recurrentes y config.
-
-¿Restaurar todo?'
-      : 'Backup básico: ' + nExp + ' gastos y ' + nPer + ' cierres.
-
-¿Importar (se fusiona con datos actuales)?';
+      ? 'Backup completo (v2): ' + nExp + ' gastos, ' + nPer + ' cierres, lista compra, recurrentes y config.\n\n¿Restaurar todo?'
+      : 'Backup básico: ' + nExp + ' gastos y ' + nPer + ' cierres.\n\n¿Importar (se fusiona con datos actuales)?';
     if (!confirm(msg)) return;
 
     if (isFullBackup) {
