@@ -509,14 +509,14 @@ tr:hover td{background:var(--surface2)}
 </head>
 <body>
 <!-- ══ LOGIN SCREEN ══ -->
-<div id="screen-login" style="display:none">
+<div id="screen-login" style="display: none;">
   <div class="auth-logo">🏠</div>
   <div class="auth-title">Gastos Hogar</div>
   <div class="auth-sub" id="login-sub">Tu gestor familiar privado</div>
   <div class="auth-card">
     <label class="auth-label" for="login-pwd">Contraseña</label>
     <input type="password" class="auth-input" id="login-pwd" placeholder="••••••••" autocomplete="current-password" enterkeyhint="go">
-    <button class="auth-btn" id="login-btn" onclick="doLogin()">Abrir 🔐</button>
+    <button class="auth-btn" id="login-btn" onclick="doLogin()" disabled="">🔓 Abriendo…</button>
     <div class="auth-err" id="login-err"></div>
   </div>
 </div>
@@ -603,31 +603,19 @@ tr:hover td{background:var(--surface2)}
 
   <!-- Tab bar -->
   <div class="tab-bar">
-    <button class="tab-btn" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
+    <button class="tab-btn active" onclick="switchTab(0)" id="tab0"><span>🏠</span>Inicio</button>
     <button class="tab-btn" onclick="switchTab(1)" id="tab1"><span>📋</span>Gastos</button>
     <button class="tab-btn" onclick="switchTab(2)" id="tab2"><span>📊</span>Análisis</button>
     <button class="tab-btn" onclick="switchTab(3)" id="tab3"><span>📅</span>Cierres</button>
-    <button class="tab-btn active" onclick="switchTab(4)" id="tab4"><span>📝</span>Historial</button>
+    <button class="tab-btn" onclick="switchTab(4)" id="tab4"><span>📝</span>Historial</button>
     <button class="tab-btn" onclick="switchTab(5)" id="tab5"><span>🛒</span>Compra<span class="shop-count-badge">7</span></button>
   </div>
 
   <div class="tab-content">
 
     <!-- ══ TAB 0: INICIO / NUEVO GASTO ══ -->
-    <div class="tab-pane" id="pane0">
-      <div id="today-summary">
-    <div class="today-bar" style="flex-direction:column;align-items:stretch;gap:4px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div><div class="today-label">Hoy</div><div class="today-count">1 gasto</div></div>
-        <div class="today-val">66,42 €</div>
-      </div>
-      <div class="today-items">
-        <div class="today-item">
-          <span>💡 Agbar</span>
-          <span class="today-item-amt">66,42 €</span>
-        </div>
-      </div>
-    </div></div>
+    <div class="tab-pane active" id="pane0">
+      <div id="today-summary"></div>
       <div id="active-period-banner"><div class="period-indicator">📅 Cierre activo: <strong>Mayo</strong> · desde 11/05/2026</div></div>
 
       <div class="form-section">
@@ -635,7 +623,7 @@ tr:hover td{background:var(--surface2)}
         <div class="currency-row"><select class="currency-select" id="f-currency" onchange="updateCurrencyDisplay()"><option value="EUR">EUR — Euro</option><option value="USD">USD — Dólar estadounidense</option><option value="GBP">GBP — Libra esterlina</option><option value="CHF">CHF — Franco suizo</option><option value="JPY">JPY — Yen japonés</option><option value="CNY">CNY — Yuan chino</option><option value="MXN">MXN — Peso mexicano</option><option value="ARS">ARS — Peso argentino</option><option value="CLP">CLP — Peso chileno</option><option value="COP">COP — Peso colombiano</option><option value="PEN">PEN — Sol peruano</option><option value="BRL">BRL — Real brasileño</option><option value="CAD">CAD — Dólar canadiense</option><option value="AUD">AUD — Dólar australiano</option><option value="NZD">NZD — Dólar neozelandés</option><option value="SEK">SEK — Corona sueca</option><option value="NOK">NOK — Corona noruega</option><option value="DKK">DKK — Corona danesa</option><option value="PLN">PLN — Esloti polaco</option><option value="CZK">CZK — Corona checa</option><option value="HUF">HUF — Forinto húngaro</option><option value="RON">RON — Leu rumano</option><option value="TRY">TRY — Lira turca</option><option value="RUB">RUB — Rublo ruso</option><option value="INR">INR — Rupia india</option><option value="IDR">IDR — Rupia indonesia</option><option value="THB">THB — Baht tailandés</option><option value="VND">VND — Dong vietnamita</option><option value="PHP">PHP — Peso filipino</option><option value="MYR">MYR — Ringgit malayo</option><option value="SGD">SGD — Dólar de Singapur</option><option value="HKD">HKD — Dólar de Hong Kong</option><option value="TWD">TWD — Dólar taiwánés</option><option value="KRW">KRW — Won surcoreano</option><option value="SAR">SAR — Riyal saudí</option><option value="AED">AED — Dírham de EAU</option><option value="QAR">QAR — Riyal catarí</option><option value="KWD">KWD — Dinar kuwaití</option><option value="EGP">EGP — Libra egipcia</option><option value="MAD">MAD — Dírham marroquí</option><option value="ZAR">ZAR — Rand sudafricano</option><option value="NGN">NGN — Naira nigeriana</option><option value="KES">KES — Chelín keniano</option><option value="ILS">ILS — Séquel israelí</option><option value="PKR">PKR — Rupia pakistaní</option><option value="BDT">BDT — Taka bangladeshés</option><option value="CUP">CUP — Peso cubano</option><option value="UYU">UYU — Peso uruguayo</option><option value="PYG">PYG — Guaraní paraguayo</option><option value="BOB">BOB — Boliviano</option><option value="GTQ">GTQ — Quetzal guatemalteco</option><option value="CRC">CRC — Colón costarricense</option><option value="DOP">DOP — Peso dominicano</option><option value="GEL">GEL — Lari georgiano</option><option value="KZT">KZT — Tenge kazajo</option><option value="ISK">ISK — Corona islandesa</option><option value="BAM">BAM — Marco de Bosnia</option><option value="RSD">RSD — Dinar serbio</option><option value="UAH">UAH — Grivna ucraniana</option><option value="AMD">AMD — Dram armenio</option><option value="AZN">AZN — Manat azerbaiyano</option><option value="MNT">MNT — Tugrik mongol</option></select><div class="currency-badge" id="f-currency-badge">EUR</div></div>
         <div class="numpad-display" id="numpad-display" onclick="focusNumpad()">
           <span class="numpad-prefix" id="numpad-prefix">€</span>
-          <span class="numpad-value placeholder" id="numpad-shown">0,00</span>
+          <span class="numpad-value" id="numpad-shown">6,7</span>
         </div>
         <div class="numpad-grid" id="numpad-grid">
           <button class="numpad-btn" onclick="numpadKey('7')">7</button>
@@ -659,7 +647,7 @@ tr:hover td{background:var(--surface2)}
         <div class="cat-grid" id="cat-grid"><div class="cat-chip" id="chip-restaurante" onclick="selectCat('restaurante')">
       <span class="cat-chip-icon">🍽️</span>
       <span class="cat-chip-label">Restaurante / Ocio</span>
-    </div><div class="cat-chip" id="chip-alimentacion" onclick="selectCat('alimentacion')">
+    </div><div class="cat-chip selected" id="chip-alimentacion" onclick="selectCat('alimentacion')">
       <span class="cat-chip-icon">🛒</span>
       <span class="cat-chip-label">Alimentación</span>
     </div><div class="cat-chip" id="chip-servicios" onclick="selectCat('servicios')">
@@ -908,12 +896,12 @@ tr:hover td{background:var(--surface2)}
       <div class="period-title">Mayo</div>
       <div class="period-dates">Desde 11/05/2026 (en curso)</div>
       <div class="period-totals">
-        <div class="period-total-item"><div class="period-total-label">Total</div><div class="period-total-val">0,00 €</div></div>
-        <div class="period-total-item"><div class="period-total-label">Blas</div><div class="period-total-val" style="color:var(--accent)">0,00 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Total</div><div class="period-total-val">66,42 €</div></div>
+        <div class="period-total-item"><div class="period-total-label">Blas</div><div class="period-total-val" style="color:var(--accent)">66,42 €</div></div>
         <div class="period-total-item"><div class="period-total-label">Corinna</div><div class="period-total-val" style="color:#ec4899">0,00 €</div></div>
       </div>
       <div style="margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:10px;font-size:12px;font-weight:600;color:var(--text2)">
-        💰 ✅ A mano
+        💰 Corinna debe a Blas: 33,21 €
       </div>
       <div class="period-actions">
         <button class="btn-secondary" onclick="openEditPeriod('1778529015561')">✏️ Editar</button>
@@ -926,7 +914,7 @@ tr:hover td{background:var(--surface2)}
     </div>
 
     <!-- ══ TAB 4: HISTORIAL / AUDIT LOG ══ -->
-    <div class="tab-pane active" id="pane4">
+    <div class="tab-pane" id="pane4">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
         <div style="font-size:16px;font-weight:700">📝 Historial de cambios</div>
         <button class="btn-secondary" onclick="clearAudit()" style="font-size:12px;padding:7px 12px">🗑 Limpiar</button>
@@ -1010,7 +998,7 @@ tr:hover td{background:var(--surface2)}
         <button class="btn-secondary" onclick="shopClearAll()" style="font-size:12px;padding:8px 12px">Vaciar todo</button>
       </div>
 
-      <div id="shop-list"><div class="shop-section-label">🟢 Mercadona <span class="shop-count-badge">3</span></div><div class="shop-item" id="si-sl1"><button class="shop-check" onclick="shopCheck('sl1')"></button><div class="shop-item-body"><div class="shop-item-name">Leche entera</div><div class="shop-item-meta"><span class="shop-tag" style="background:#22c55e22;color:#22c55e">🟢 Mercadona</span><span class="shop-qty-tag">6 ud</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl1')" title="Eliminar">×</button></div><div class="shop-item" id="si-sl2"><button class="shop-check" onclick="shopCheck('sl2')"></button><div class="shop-item-body"><div class="shop-item-name">Pan de molde integral</div><div class="shop-item-meta"><span class="shop-tag" style="background:#22c55e22;color:#22c55e">🟢 Mercadona</span><span class="shop-qty-tag">2 ud</span><span class="shop-who-tag">Corinna</span></div></div><button class="shop-del" onclick="shopDelete('sl2')" title="Eliminar">×</button></div><div class="shop-item" id="si-sl6"><button class="shop-check" onclick="shopCheck('sl6')"></button><div class="shop-item-body"><div class="shop-item-name">Aceite oliva virgen extra</div><div class="shop-item-meta"><span class="shop-tag" style="background:#22c55e22;color:#22c55e">🟢 Mercadona</span><span class="shop-qty-tag">2 botella</span><span class="shop-who-tag">Corinna</span></div></div><button class="shop-del" onclick="shopDelete('sl6')" title="Eliminar">×</button></div><div class="shop-section-label">🔵 Carrefour <span class="shop-count-badge">1</span></div><div class="shop-item urgent-item" id="si-sl4"><button class="shop-check" onclick="shopCheck('sl4')"></button><div class="shop-item-body"><div class="shop-item-name">⚡ Detergente Ariel</div><div class="shop-item-meta"><span class="shop-tag" style="background:#3b82f622;color:#3b82f6">🔵 Carrefour</span><span class="shop-qty-tag">1 caja</span><span class="shop-who-tag">Corinna</span></div></div><button class="shop-del" onclick="shopDelete('sl4')" title="Eliminar">×</button></div><div class="shop-section-label">🌿 Ametller <span class="shop-count-badge">1</span></div><div class="shop-item" id="si-sl3"><button class="shop-check" onclick="shopCheck('sl3')"></button><div class="shop-item-body"><div class="shop-item-name">Pollo entero</div><div class="shop-item-meta"><span class="shop-tag" style="background:#16a34a22;color:#16a34a">🌿 Ametller</span><span class="shop-qty-tag">1.5 kg</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl3')" title="Eliminar">×</button></div><div class="shop-section-label">🟡 Lidl <span class="shop-count-badge">1</span></div><div class="shop-item" id="si-sl7"><button class="shop-check" onclick="shopCheck('sl7')"></button><div class="shop-item-body"><div class="shop-item-name">Cerveza Estrella Damm</div><div class="shop-item-meta"><span class="shop-tag" style="background:#eab30822;color:#eab308">🟡 Lidl</span><span class="shop-qty-tag">12 ud</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl7')" title="Eliminar">×</button></div><div class="shop-section-label">💊 Farmacia <span class="shop-count-badge">1</span></div><div class="shop-item urgent-item" id="si-sl5"><button class="shop-check" onclick="shopCheck('sl5')"></button><div class="shop-item-body"><div class="shop-item-name">⚡ Ibuprofeno 600</div><div class="shop-item-meta"><span class="shop-tag" style="background:#ec489922;color:#ec4899">💊 Farmacia</span><span class="shop-qty-tag">1 caja</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl5')" title="Eliminar">×</button></div><div class="shop-section-label" style="margin-top:12px">✓ Comprados (1) — se borran en 24h</div><div class="shop-item done" id="si-sl8"><button class="shop-check done" onclick="shopCheck('sl8')">✓</button><div class="shop-item-body"><div class="shop-item-name">Papel WC</div><div class="shop-item-meta"><span class="shop-tag" style="background:#3b82f622;color:#3b82f6">🔵 Carrefour</span><span class="shop-qty-tag">1 paquete</span><span class="shop-who-tag">Corinna</span><span class="shop-done-time">hace 1h</span></div></div><button class="shop-del" onclick="shopDelete('sl8')" title="Eliminar">×</button></div></div>
+      <div id="shop-list"><div class="shop-section-label">🟢 Mercadona <span class="shop-count-badge">3</span></div><div class="shop-item" id="si-sl1"><button class="shop-check" onclick="shopCheck('sl1')"></button><div class="shop-item-body"><div class="shop-item-name">Leche entera</div><div class="shop-item-meta"><span class="shop-tag" style="background:#22c55e22;color:#22c55e">🟢 Mercadona</span><span class="shop-qty-tag">6 ud</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl1')" title="Eliminar">×</button></div><div class="shop-item" id="si-sl2"><button class="shop-check" onclick="shopCheck('sl2')"></button><div class="shop-item-body"><div class="shop-item-name">Pan de molde integral</div><div class="shop-item-meta"><span class="shop-tag" style="background:#22c55e22;color:#22c55e">🟢 Mercadona</span><span class="shop-qty-tag">2 ud</span><span class="shop-who-tag">Corinna</span></div></div><button class="shop-del" onclick="shopDelete('sl2')" title="Eliminar">×</button></div><div class="shop-item" id="si-sl6"><button class="shop-check" onclick="shopCheck('sl6')"></button><div class="shop-item-body"><div class="shop-item-name">Aceite oliva virgen extra</div><div class="shop-item-meta"><span class="shop-tag" style="background:#22c55e22;color:#22c55e">🟢 Mercadona</span><span class="shop-qty-tag">2 botella</span><span class="shop-who-tag">Corinna</span></div></div><button class="shop-del" onclick="shopDelete('sl6')" title="Eliminar">×</button></div><div class="shop-section-label">🔵 Carrefour <span class="shop-count-badge">1</span></div><div class="shop-item urgent-item" id="si-sl4"><button class="shop-check" onclick="shopCheck('sl4')"></button><div class="shop-item-body"><div class="shop-item-name">⚡ Detergente Ariel</div><div class="shop-item-meta"><span class="shop-tag" style="background:#3b82f622;color:#3b82f6">🔵 Carrefour</span><span class="shop-qty-tag">1 caja</span><span class="shop-who-tag">Corinna</span></div></div><button class="shop-del" onclick="shopDelete('sl4')" title="Eliminar">×</button></div><div class="shop-section-label">🌿 Ametller <span class="shop-count-badge">1</span></div><div class="shop-item" id="si-sl3"><button class="shop-check" onclick="shopCheck('sl3')"></button><div class="shop-item-body"><div class="shop-item-name">Pollo entero</div><div class="shop-item-meta"><span class="shop-tag" style="background:#16a34a22;color:#16a34a">🌿 Ametller</span><span class="shop-qty-tag">1.5 kg</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl3')" title="Eliminar">×</button></div><div class="shop-section-label">🟡 Lidl <span class="shop-count-badge">1</span></div><div class="shop-item" id="si-sl7"><button class="shop-check" onclick="shopCheck('sl7')"></button><div class="shop-item-body"><div class="shop-item-name">Cerveza Estrella Damm</div><div class="shop-item-meta"><span class="shop-tag" style="background:#eab30822;color:#eab308">🟡 Lidl</span><span class="shop-qty-tag">12 ud</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl7')" title="Eliminar">×</button></div><div class="shop-section-label">💊 Farmacia <span class="shop-count-badge">1</span></div><div class="shop-item urgent-item" id="si-sl5"><button class="shop-check" onclick="shopCheck('sl5')"></button><div class="shop-item-body"><div class="shop-item-name">⚡ Ibuprofeno 600</div><div class="shop-item-meta"><span class="shop-tag" style="background:#ec489922;color:#ec4899">💊 Farmacia</span><span class="shop-qty-tag">1 caja</span><span class="shop-who-tag">Blas</span></div></div><button class="shop-del" onclick="shopDelete('sl5')" title="Eliminar">×</button></div></div>
     </div>
 
   </div>
@@ -1058,7 +1046,7 @@ tr:hover td{background:var(--surface2)}
       <input type="password" class="form-input" id="s-newpwd2" placeholder="Confirmar">
       <button class="btn-primary" onclick="changePassword()" style="margin-top:8px">🔑 Cambiar</button>
     </div>
-    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">1 gastos · 1 cierres</div></div></div>
+    <div class="settings-row"><div><div class="settings-label">Datos</div><div class="settings-sub" id="data-stats">2 gastos · 1 cierres</div></div></div>
     <div style="margin-top:10px;margin-bottom:4px">
       <div style="font-size:10px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">Copia de seguridad (JSON)</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">
@@ -1309,7 +1297,7 @@ tr:hover td{background:var(--surface2)}
   </div>
 </div>
 
-<div class="toast success" id="toast">🗑 Eliminado</div>
+<div class="toast error" id="toast">Elige una categoría</div>
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
 <script>
@@ -1754,7 +1742,7 @@ function loadDemoData() {
 // ══════════════════════════════════════════════
 const SESSION_HOURS = 8;
 const SESSION_KEY = 'gastos_session';
-const EMBEDDED = '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';
+const EMBEDDED = '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';
 
 function migrateState() {
   if (!state.periods) state.periods = [];
